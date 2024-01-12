@@ -1,11 +1,13 @@
 import React from 'react';
+import HomeNavBar from './HomeNavBar';
+import Home from './Home';
 
-const App = props => {
-    return(
-      <div>
-       <h1>This is App</h1>
-      </div>
-    );
-  }
-  
-  export default App;
+function App() {
+  return (
+    <div>
+      <Home />
+    </div>
+  );
+}
+
+export default App;
