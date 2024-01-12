@@ -41,8 +41,8 @@ const SignUp = () => {
                 <button type="submit" id="submit-button">Create user</button>
             </form>
             { availability ? 
-            <div>Username is available</div> : 
-            <div>Username is not available</div>
+            <div style={{ color: "#85BAA1", fontSize: "0.8em" }}>Username is available </div> : 
+            <div style={{ color: "#720E07", fontSize: "0.8em" }}>Username is not available</div>
             }
             <div>Already a user? <a href="/">Sign in</a></div>
         </div>
