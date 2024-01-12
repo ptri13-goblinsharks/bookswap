@@ -1,6 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const SignUp = () => {
+    const [newUsername, setNewUsername] = useState('');
+    const [availability, setAvailability] = useState(true);
+
+    useEffect(() => {
+        if (newUsername) {
+            fetch(`/check/${newUsername}`)
+            .then(res => res.json())
+            .then(bool => setAvailability(bool))
+            .catch(err => console.log('App: check username availability error:', err));
+        } else {
+            // if input is empty
+            setAvailability(true);
+        }
+    }, [newUsername]);
+    
+
+    const handleUsernameChange = (e) => setNewUsername(e.target.value);
+
     return (
         <div>
             <h1>Sign up</h1>
@@ -12,17 +30,23 @@ const SignUp = () => {
                 <div>ZIP Code</div>
                 <div><input name="zip" type="text" /></div>
                 <div>Username</div>
-                <div><input name="username" type="text"></input></div>
+                <div><input
+                    name="username"
+                    type="text"
+                    onChange={handleUsernameChange}
+                    value={newUsername}
+                /></div>
                 <div>Password</div>
                 <div><input name="password" type="password"></input></div>
                 <button type="submit" id="submit-button">Create user</button>
             </form>
+            { availability ? 
+            <div>Username is available</div> : 
+            <div>Username is not available</div>
+            }
             <div>Already a user? <a href="/">Sign in</a></div>
         </div>
     )
 }
 
 export default SignUp;
-
-
-//test
