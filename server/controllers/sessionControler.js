@@ -5,43 +5,49 @@ const User = require('../models/userModel');
 const sessionController = {};
 
 sessionController.isLoggedIn = (req, res, next) => {
-    const ssidCookie = res.cookies.ssid;
-    Session.findOne({ cookieId: ssidCookie })
-    .then(data => {
-        if (!data) {
-            res.redirect('/signup');
-        } else {
-            User.findOne({ }) // add user search criteria here
-            .then(user => {
-                res.locals.user = user;
-                return next();
-            })
-        }
-    })
-    .catch(err => {
-        return next({
-            log: 'Error in sessionController.isLoggedIn',
-            status: 400,
-            message: { err: 'Error when verifying logged in session' }
+    Session.findOne({ cookieId: req.cookies.ssid })
+        .then(session => {
+            if (!session) {
+                return res.redirect('/signup');
+            } else {
+                User.findOne({ _id: session.cookieId })
+                    .then(user => {
+                        res.locals.user = user;
+                        return next();
+                    })
+            }
         })
-    });
+        .catch(err => {
+            return next({
+                log: 'Error in sessionController.isLoggedIn',
+                status: 400,
+                message: { err: 'Error when verifying logged in session' }
+            })
+        });
 };
 
 sessionController.startSession = (req, res, next) => {
-    Session.findOne({ cookieId: res.locals.userID })
-    .then(data => {
-        if (!data) {
-            Session.create({ cookieId: res.locals.userID });
-        }
-        return next();
-    })
-    .catch(err => {
-        return next({
-            log: 'Error in sessionController.startSession',
-            status: 400,
-            message: { err: 'Error when starting session'}
+    Session.findOne({ cookieId: req.cookies.ssid })
+        .then(session => {
+            if (!session) {
+                Session.create({ cookieId: req.cookies.ssid })
+                    .then(() => next())
+                    .catch(err => next({
+                        log: 'Error in sessionController.startSession',
+                        status: 400,
+                        message: { err: 'Error when creating session' }
+                    }))
+            } else {
+                return next();
+            }
+        })
+        .catch(err => {
+            return next({
+                log: 'Error in sessionController.startSession',
+                status: 400,
+                message: { err: 'Error when finding session' }
+            });
         });
-    });
 }
 
 module.exports = sessionController;
