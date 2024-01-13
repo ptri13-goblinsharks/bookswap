@@ -58,7 +58,7 @@ function HomeSearchBar() {
 
   const [books, setBooks] = useState([]);
   const [searchBook, setSearchBook] = useState('');
-  const [selectedBook, setSelectedBook] = useState('null');
+  const [selectedBook, setSelectedBook] = useState(null);
 
   useEffect(() => {
     setBooks(mockBooks);
