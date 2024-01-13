@@ -5,7 +5,6 @@
   "main": "webpack.config.js",
   "scripts": {
     "start": "NODE_ENV=production node server/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=development concurrently \"webpack serve --open\" \"nodemon server/server.js\"",
     "build": "NODE_ENV=production webpack"
   },
@@ -17,6 +16,7 @@
     "cookie-parser": "^1.4.6",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
+    "mongodb": "^6.3.0",
     "mongoose": "^8.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
