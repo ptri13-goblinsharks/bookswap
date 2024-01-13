@@ -50,4 +50,16 @@ sessionController.startSession = (req, res, next) => {
         });
 }
 
+sessionController.endSession = (req, res, next) => {
+    Session.findOneAndDelete({ cookieId: req.cookies.ssid})
+    .then(() => next())
+    .catch(err => {
+        return next({
+            log: 'Error in sessionController.endSession',
+            status: 400,
+            message: { err: 'Error when ending session' }
+        });       
+    })
+}
+
 module.exports = sessionController;
