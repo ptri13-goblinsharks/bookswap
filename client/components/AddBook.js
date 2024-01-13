@@ -4,7 +4,8 @@
  * @module  AddBook.js
  * @author
  * @date
- * @description search bar that takes input and uses it to call to API
+ * @description search bar that takes input and uses it to call to openLibrary API
+ * https://openlibrary.org/developers/api
  *
  * ************************************
  */
