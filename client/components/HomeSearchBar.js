@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import GoogleMap from './GoogleMap';
 
 function HomeSearchBar() {
-  const mockBooks = [
+   const mockBooks = [
     { title: 'To Kill a Mockingbird', author: 'Harper Lee', genre: 'Fiction' },
     { title: '1984', author: 'George Orwell', genre: 'Dystopian' },
     {
