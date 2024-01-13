@@ -1,6 +1,5 @@
 const Session = require('../models/sessionModel');
-const User = require('../models/userModel');
-// check datatype of imported user
+const { User } = require('../models/models');
 
 const sessionController = {};
 
