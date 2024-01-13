@@ -21,6 +21,8 @@ const bookSchema = new Schema({
 
 const Book = mongoose.model('book', bookSchema);
 
+// Worked with Darren on userSchema
+
 const userSchema = new Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
