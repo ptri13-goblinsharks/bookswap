@@ -15,6 +15,7 @@ const Schema = mongoose.Schema;
 const bookSchema = new Schema({
   title: {type: String, required: true},
   olId: {type: String, required: true},
+  previewUrl: String,
   author: String,
   genre: String  
 });
@@ -29,7 +30,7 @@ const userSchema = new Schema({
   name: { type: String, required: true},
   address: { type: String, required: false },
   zipcode: { type: Number, required: false },
-  books: [[{book: Schema.Types.ObjectId, ref: Book}, {isAvaliable: {type: Boolean, required: true}, isBorrowedFrom: String}]]
+  books: [[{book: Schema.Types.ObjectId, ref: Book}, {isAvaliable: {type: Boolean, required: true}}, {isBorrowed: {borrwedFrom: String, borrowedOn: Date}}]]
 });
 
   //Hashing password
