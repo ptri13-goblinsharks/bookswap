@@ -1,6 +1,13 @@
-// do I need this component? Maybe I can just modify HomeSearchBar
-// to pass correct model through props
-
+/**
+ * ************************************
+ *
+ * @module  AddBook.js
+ * @author
+ * @date
+ * @description search bar that takes input and uses it to call to API
+ *
+ * ************************************
+ */
 
 import React from 'react'
 import { useState, useEffect } from 'react';
@@ -13,9 +20,6 @@ const AddBook = () => {
     const [searchBook, setSearchBook] = useState('');
     const [selectedBook, setSelectedBook] = useState('null');
   
-    useEffect(() => {
-        setBooks(mockBooks);
-      }, []);
 
 
     return (
