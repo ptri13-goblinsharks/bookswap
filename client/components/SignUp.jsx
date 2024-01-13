@@ -6,7 +6,7 @@ const SignUp = () => {
 
     useEffect(() => {
         if (newUsername) {
-            fetch(`/check/${newUsername}`)
+            fetch(`/action/check/${newUsername}`)
             .then(res => res.json())
             .then(bool => setAvailability(bool))
             .catch(err => console.log('App: check username availability error:', err));
@@ -22,7 +22,7 @@ const SignUp = () => {
     return (
         <div>
             <h1>Sign up</h1>
-            <form method='POST' action='/signup'>
+            <form method='POST' action='/action/signup'>
                 <div>Name</div>
                 <div><input name="name" type="text" /></div>
                 <div>Address</div>
