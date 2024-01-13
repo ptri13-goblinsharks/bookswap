@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import GoogleMap from './GoogleMap';
 
 function HomeSearchBar() {
   const mockBooks = [
@@ -102,6 +103,7 @@ function HomeSearchBar() {
           </ul>
         )}
       </div>
+      <GoogleMap selectedBook={selectedBook} />
     </div>
   );
 }
