@@ -29,7 +29,7 @@ const userSchema = new Schema({
   name: { type: String, required: true},
   address: { type: String, required: false },
   zipcode: { type: Number, required: false },
-  books: [[{book: Schema.Types.ObjectId, ref: Book}, {isAvaliable: {type: Boolean, required: true}}]]
+  books: [[{book: Schema.Types.ObjectId, ref: Book}, {isAvaliable: {type: Boolean, required: true}, isBorrowedFrom: String}]]
 });
 
   //Hashing password
