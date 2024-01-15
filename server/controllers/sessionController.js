@@ -1,6 +1,5 @@
 const Session = require('../models/sessionModel');
-const User = require('../models/userModel');
-// check datatype of imported user
+const { User } = require('../models/models');
 
 const sessionController = {};
 
@@ -27,6 +26,8 @@ sessionController.isLoggedIn = (req, res, next) => {
 };
 
 sessionController.startSession = (req, res, next) => {
+    console.log('session controller start session running');
+    console.log('cookieID is ', req.cookies.ssid)
     Session.findOne({ cookieId: req.cookies.ssid })
         .then(session => {
             if (!session) {
