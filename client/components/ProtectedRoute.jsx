@@ -12,12 +12,12 @@ const ProtectedRoute = ({ children }) => {
             .then((bool) => {
                 setLoggedIn(bool);
                 if (!bool) {
-                    // navigate('/');
+                    navigate('/');
                 }
             })
             .catch(err => {
                 console.error('Auth check failed:', err);
-                // navigate('/');
+                navigate('/');
             });
     }, [navigate]);
 
