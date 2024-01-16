@@ -12,9 +12,12 @@
 
 import React from 'react'
 
-const MyBooks = () => {
+const MyBooks = ({ books }) => {ß
   return (
-    <div>MyBooks</div>
+    <div>{books.map(element => {
+        element.preview;
+    })};
+    </div>
   )
 }
 

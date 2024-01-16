@@ -24,7 +24,20 @@ const AddBook = () => {
 
 
     return (
-    <div>AddBook</div>
+    <><div> <input
+            className='add-search-bar'
+            type='text'
+            placeholder='Find a book in the global library'
+            value={searchBook}
+            onChange={(e) => setSearchBook(e.target.value)} /></div><div>
+                {selectedBook && (
+                    <ul>
+                        <li>{selectedBook.title}</li>
+                        <li>{selectedBook.author}</li>
+                        <li>{selectedBook.genre}</li>
+                    </ul>
+                )}
+            </div></>
     )
 }
 
