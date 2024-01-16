@@ -8,7 +8,7 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        fetch('/login', {
+        fetch('/action/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -43,6 +43,7 @@ const Login = () => {
                 <div><button type="submit">Log in</button></div>
             </form>
             {!correctCredential && <div>Incorrect username or password.</div>}
+            <div>Not a user yet? <a href="signup">Sign up</a></div>
         </div>
     )
 }

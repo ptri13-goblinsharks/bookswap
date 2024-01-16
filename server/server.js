@@ -2,9 +2,13 @@ const express = require('express');
 const path = require('path');
 const PORT = 3000;
 const app = express();
+const cookieParser = require('cookie-parser');
+
 
 // parses JSON from incoming request
 app.use(express.json());
+app.use(cookieParser());
+
 
 const userController = require('./controllers/userController')
 const cookieController = require('./controllers/cookieController')
@@ -16,19 +20,20 @@ app.get('/', (req, res) => {
 
 
 //Signup
-app.post('/signup', userController.createUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
-    res.status(200).redirect('/myLibrary')
+app.post('/action/signup', userController.createUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
+    res.status(200).redirect('/home')
 })
 
 //Checks user availability
-app.get('/check/:username', userController.checkUser, (req, res) => {
-    res.json(res.locals.userAvailability)
+app.get('/action/check/:username', userController.checkUser, (req, res) => {
+    console.log('availability is ', res.locals.userAvailability)
+    res.json(res.locals.userAvailability);
 })
 
 //Login
-app.post('/login', userController.verifyUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
+app.post('/action/login', userController.verifyUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
     if (res.locals.correctUser) {
-        res.status(200).redirect('/myLibrary')}
+        res.status(200).redirect('/home')}
     else {
         res.json(res.locals.correctUser)
     }
@@ -40,7 +45,7 @@ app.get('/myLibrary', sessionController.isLoggedIn, (req, res) => {
 })
 
 //Logout
-app.get('/logout', sessionController.endSession, (req, res) => {
+app.get('/action/logout', sessionController.endSession, (req, res) => {
     res.clearCookie('ssid');
     res.redirect('/');
 })
