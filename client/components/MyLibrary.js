@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import HomeNavBar from './HomeNavBar';
 import AddBook from './AddBook';
 //import BorrowedBooks from '../components/BorrowedBooks';
@@ -21,13 +21,11 @@ const MyLibrary = () => {
 
   return (
     <div>
-        <HomeNavBar />
-        <MyBooks books={myLibraryBooks}/>
-        <AddBook />
-        
+      <HomeNavBar />
+      <MyBooks books={myLibraryBooks} />
+      <AddBook />
     </div>
+  );
+};
 
-  )
-}
-
-export default MyLibrary
+export default MyLibrary;
