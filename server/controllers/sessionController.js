@@ -7,7 +7,7 @@ sessionController.isLoggedIn = (req, res, next) => {
     console.log('checking if logged in session exists')
     Session.findOne({ cookieId: req.cookies.ssid })
         .then(session => {
-            if (!session) {
+            if (session === null) {
                 console.log('no active session found')
                 return res.status(401).json(false);
             } else {

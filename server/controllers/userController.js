@@ -6,10 +6,10 @@ const userController = {};
 userController.createUser = (req, res, next) => {
     console.log("userController createUser running")
     console.log("request body ", req.body)
-    const { username, password, name, address, zipcode } = req.body;
+    const { username, password, name, address } = req.body;
 
     //Checks if any input fields are missing
-    if (!username || !name || !password || !address || !zipcode) {
+    if (!username || !name || !password || !address ) {
         return res.status(400).json({ error: 'All fields are required' });
     }
 
@@ -18,7 +18,6 @@ userController.createUser = (req, res, next) => {
         password,
         name,
         address,
-        zipcode
     })
         .then((data) => {
             res.locals.user = data;

@@ -3,6 +3,8 @@ const path = require('path');
 const PORT = 3000;
 const app = express();
 const cookieParser = require('cookie-parser');
+require('dotenv').config();
+const googleMapsKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
 
 // parses JSON from incoming request
@@ -23,6 +25,10 @@ app.get('/', (req, res) => {
 app.post('/action/signup', userController.createUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
     res.status(200).json(true);
     // res.status(200).redirect('/home')
+})
+
+app.get('/action/getMapsKey', (req, res) => {
+    res.status(200).json(googleMapsKey);
 })
 
 //Checks user availability
