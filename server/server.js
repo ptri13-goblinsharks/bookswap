@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 app.use(express.json());
 app.use(cookieParser());
 
+const libraryRouter = require('./routes/library');
 
 const userController = require('./controllers/userController')
 const cookieController = require('./controllers/cookieController')
@@ -49,6 +50,10 @@ app.get('/action/logout', sessionController.endSession, (req, res) => {
     res.clearCookie('ssid');
     res.redirect('/');
 })
+
+// Library
+
+app.use('/library', libraryRouter);
 
 //Handler for 404
 app.use('*', (req, res) => {
