@@ -32,11 +32,11 @@ sessionController.isLoggedIn = (req, res, next) => {
 sessionController.startSession = (req, res, next) => {
     console.log('session controller start session running');
     console.log('cookieID is ', req.cookies.ssid)
-    Session.findOne({ cookieId: req.cookies.ssid })
+    Session.findOne({ cookieId: res.locals.userID })
         .then(session => {
             if (!session) {
                 console.log('creating new session and continuing login')
-                Session.create({ cookieId: req.cookies.ssid })
+                Session.create({ cookieId: res.locals.userID })
                     .then((sesh) => {
                         console.log('new session is ', sesh)
                         next()

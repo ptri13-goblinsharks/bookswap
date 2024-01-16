@@ -23,7 +23,7 @@ userController.createUser = (req, res, next) => {
         .then((data) => {
             res.locals.user = data;
             res.locals.userID = data._id.toString();
-            console.log('new use is ', res.locals.user, ' and id is ', res.locals.userID)
+            console.log('new user is ', res.locals.user, ' and id is ', res.locals.userID)
 
             return next()
         })
