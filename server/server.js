@@ -21,7 +21,8 @@ app.get('/', (req, res) => {
 
 //Signup
 app.post('/action/signup', userController.createUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
-    res.status(200).redirect('/home')
+    res.status(200).json(true);
+    // res.status(200).redirect('/home')
 })
 
 //Checks user availability

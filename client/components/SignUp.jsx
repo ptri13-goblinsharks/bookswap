@@ -14,14 +14,10 @@ const SignUp = () => {
     useEffect(() => {
         if (userData.username) {
             fetch(`/action/check/${userData.username}`)
-                .then(res => {
-                    console.log('res is ', res.json());
-                    return res.json()
+                .then(res => res.json())
+                .then(bool => {
+                    setAvailability(bool)
                 })
-                    .then(bool => {
-                        console.log('bool is', bool)
-                        setAvailability(bool)
-                    })
                 .catch(err => console.log('App: check username availability error:', err));
         } else {
             // if input is empty
@@ -54,8 +50,13 @@ const SignUp = () => {
             },
             body: JSON.stringify(data)
         })
-        .then(res => res.json())
-        .catch(err => console.log("App: create user error ", err));
+            .then(res => res.json())
+            .then(bool => {
+                if (bool) {
+                    window.location.href = '/home';
+                }
+            })
+            .catch(err => console.log("App: create user error ", err));
     }
 
     return (
@@ -98,7 +99,15 @@ const SignUp = () => {
                     value={userData.password}
                     onChange={handleUserDataChange} /></div>
 
-                <button type="submit" disabled={!availability}>Create user</button>
+                <button type="submit" 
+                disabled={
+                    !availability || 
+                    !userData.name || 
+                    !userData.address || 
+                    !userData.zipcode ||
+                    !userData.username ||
+                    !userData.password 
+                    }>Create user</button>
             </form>
             {availability ?
                 <div style={{ color: "#85BAA1", fontSize: "0.8em" }}>Username is available </div> :

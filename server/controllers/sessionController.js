@@ -31,6 +31,7 @@ sessionController.startSession = (req, res, next) => {
     Session.findOne({ cookieId: req.cookies.ssid })
         .then(session => {
             if (!session) {
+                console.log('no session found, creating new session and continuing login')
                 Session.create({ cookieId: req.cookies.ssid })
                     .then(() => next())
                     .catch(err => next({
@@ -39,10 +40,12 @@ sessionController.startSession = (req, res, next) => {
                         message: { err: 'Error when creating session' }
                     }))
             } else {
+                console.log('existing session found, continuing log in')
                 return next();
             }
         })
         .catch(err => {
+            console.log('error when creating new session')
             return next({
                 log: 'Error in sessionController.startSession',
                 status: 400,
