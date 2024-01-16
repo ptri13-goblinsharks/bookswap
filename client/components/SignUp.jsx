@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
     // const [newUsername, setNewUsername] = useState('');
+    const navigate = useNavigate();
     const [availability, setAvailability] = useState(true);
     const [userData, setUserData] = useState({
         username: '',
@@ -53,7 +55,7 @@ const SignUp = () => {
             .then(res => res.json())
             .then(bool => {
                 if (bool) {
-                    window.location.href = '/home';
+                    navigate('/home');
                 }
             })
             .catch(err => console.log("App: create user error ", err));

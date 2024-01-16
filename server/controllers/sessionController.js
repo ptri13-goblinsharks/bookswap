@@ -4,14 +4,18 @@ const { User } = require('../models/models');
 const sessionController = {};
 
 sessionController.isLoggedIn = (req, res, next) => {
+    console.log('checking if logged in session exists')
     Session.findOne({ cookieId: req.cookies.ssid })
         .then(session => {
             if (!session) {
-                return res.redirect('/signup');
+                console.log('no active session found')
+                return res.status(401).json(false);
             } else {
+                console.log('active session found')
                 User.findOne({ _id: session.cookieId })
                     .then(user => {
                         res.locals.user = user;
+                        console.log('current username is ', user.username)
                         return next();
                     })
             }
@@ -31,9 +35,12 @@ sessionController.startSession = (req, res, next) => {
     Session.findOne({ cookieId: req.cookies.ssid })
         .then(session => {
             if (!session) {
-                console.log('no session found, creating new session and continuing login')
+                console.log('creating new session and continuing login')
                 Session.create({ cookieId: req.cookies.ssid })
-                    .then(() => next())
+                    .then((sesh) => {
+                        console.log('new session is ', sesh)
+                        next()
+                    })
                     .catch(err => next({
                         log: 'Error in sessionController.startSession',
                         status: 400,

@@ -43,9 +43,18 @@ app.post('/action/login', userController.verifyUser, cookieController.setSSIDCoo
     // }
 })
 
-//Homepage once logged in
+//Protect server side requests to protected pages
+app.get('/home', sessionController.isLoggedIn, (req, res) => {
+    res.status(200).json(res.locals.user)
+})
+
 app.get('/myLibrary', sessionController.isLoggedIn, (req, res) => {
     res.status(200).json(res.locals.user)
+})
+
+//Verify active session for client side requests to protected pages
+app.get('/action/auth', sessionController.isLoggedIn, (req, res) => {
+    res.status(200).json(true);
 })
 
 //Logout
