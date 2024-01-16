@@ -65,19 +65,22 @@ userController.verifyUser = (req, res, next) => {
                 bcrypt.compare(password, data.password, function (error, result) {
                     if (result) {
                         res.locals.user = data;
-                        res.locals.userID = data._id;
+                        res.locals.userID = data._id.toString();
                         res.locals.correctUser = true
+                        console.log('correct password, correct user is ', res.locals.correctUser)
                         return next();
                     }
                     else {
-                        res.locals.correctUser = false;
-                        return next();
+                        console.log('wrong password')
+                        return res.json(false);
+                        // res.locals.correctUser = false;
+                        // return next();
                     }
                 })
             } else {
-                console.log('data is null')
-                res.locals.correctUser = false;
-                res.json(false)
+                // res.locals.correctUser = false;
+                console.log('username not found')
+                return res.json(false)
             }
         })
 }

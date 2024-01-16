@@ -32,11 +32,14 @@ app.get('/action/check/:username', userController.checkUser, (req, res) => {
 
 //Login
 app.post('/action/login', userController.verifyUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
-    if (res.locals.correctUser) {
-        res.status(200).redirect('/home')}
-    else {
-        res.json(res.locals.correctUser)
-    }
+    console.log('authentication completed, correctUser is ', res.locals.correctUser)
+    // if (res.locals.correctUser) {
+        console.log('redirecting to home')
+        res.status(200).redirect('/home')
+    // }
+    // else {
+    //     res.json(res.locals.correctUser)
+    // }
 })
 
 //Homepage once logged in
