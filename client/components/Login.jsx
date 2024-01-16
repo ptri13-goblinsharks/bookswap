@@ -16,7 +16,12 @@ const Login = () => {
             body: JSON.stringify({ username, password })
         })
         .then(res => res.json())
-        .then(bool => setCorrectCredential(bool))
+        .then(bool => {
+            setCorrectCredential(bool);
+            if (bool) {
+                window.location.href = '/home';
+            }
+        })
         .catch(err => console.log('App: log in error:', err));
     }
     
