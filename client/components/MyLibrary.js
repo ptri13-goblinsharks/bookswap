@@ -7,16 +7,17 @@ import MyBooks from './MyBooks';
 import { useSelector } from 'react-redux';
 
 const MyLibrary = () => {
-  // pull library data from DB here and pass to search bar as props.
-  // reuse HomeSearchBar.js instead of AddBook.js
+    // pull library data from DB here and pass to search bar as props.
 
-  const [myLibraryBooks, setMyLibraryBooks] = useState('');
-  const [globalLibraryBooks, setGlobalLibraryBooks] = useState('');
-
-  //call to personal library
-  fetch('').then((data) => {
-    setMyLibraryBooks(data);
-  });
+    const [myLibraryBooks, setMyLibraryBooks] = useState('');
+    
+    //call to personal library 
+    //Ben building route for DB call
+    fetch('')
+    .then (data => {
+        setMyLibraryBooks(data);
+    })
+  
 
   return (
     <div>

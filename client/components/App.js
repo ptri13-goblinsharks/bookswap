@@ -5,15 +5,24 @@ import SignUp from './SignUp.jsx';
 import Login from './Login.jsx';
 import MyLibrary from './MyLibrary';
 import HomeNavBar from './HomeNavBar';
+import ProtectedRoute from './ProtectedRoute.jsx';
 
 function App() {
   return (
     <div>
       <Routes>
-        <Route path='/home' element={<Home />} />
+        <Route path='/home' element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        } />
         <Route path='/' element={<Login />} />
         <Route path='/signup' element={<SignUp />} />
-        <Route path='/myLibrary' element={<MyLibrary />} />
+        <Route path='/myLibrary' element={
+          <ProtectedRoute>
+            <MyLibrary />
+          </ProtectedRoute>
+        } />
       </Routes>
     </div>
   );
