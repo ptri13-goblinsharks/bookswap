@@ -4,3 +4,39 @@
   justify-content: space-between;
   padding: 20px;
 }
+
+.home-navbar button {
+  background-color: #88a1b7;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100px;
+  height: 50px;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.home-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  margin-top: 50px;
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-bottom: 270px;
+}
+.home-searchbar {
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  padding: 10px;
+
+  /* margin-left: 20px; */
+}

@@ -86,39 +86,41 @@ function HomeSearchBar() {
   };
 
   return (
-    <div>
-      <input
-        className='home-search-bar'
-        type='text'
-        placeholder='Find book'
-        value={searchBook}
-        onChange={(e) => setSearchBook(e.target.value)}
-      />
-      <div>
-        {searchBook &&
-          filteredBooks.map((book, index) => (
-            <ul key={index}>
-              <li>{book.title}</li>
-              <li>{book.author}</li>
-              <li>{book.genre}</li>
-              <li>{book.fullAddress}</li>
-              <button onClick={() => handleBookSelect(book)}>
-                Show on map
-              </button>
+    <div className='home-container'>
+      <div className='search-container'>
+        <input
+          className='home-searchbar'
+          type='text'
+          placeholder='Find book'
+          value={searchBook}
+          onChange={(e) => setSearchBook(e.target.value)}
+        />
+        <div>
+          {searchBook &&
+            filteredBooks.map((book, index) => (
+              <ul key={index}>
+                <li>{book.title}</li>
+                <li>{book.author}</li>
+                <li>{book.genre}</li>
+                <li>{book.fullAddress}</li>
+                <button onClick={() => handleBookSelect(book)}>
+                  Show on map
+                </button>
+              </ul>
+            ))}
+        </div>
+        <div>
+          {selectedBook && (
+            <ul>
+              <li>{selectedBook.title}</li>
+              <li>{selectedBook.author}</li>
+              <li>{selectedBook.genre}</li>
+              <li>{selectedBook.fullAddress}</li>
             </ul>
-          ))}
+          )}
+        </div>
       </div>
-      <div>
-        {selectedBook && (
-          <ul>
-            <li>{selectedBook.title}</li>
-            <li>{selectedBook.author}</li>
-            <li>{selectedBook.genre}</li>
-            <li>{selectedBook.fullAddress}</li>
-          </ul>
-        )}
-      </div>
-      <GoogleMap selectedBook={selectedBook} />
+      <GoogleMap selectedBook={selectedBook} className='google-map' />
     </div>
   );
 }
