@@ -3,6 +3,8 @@ const path = require('path');
 const PORT = 3000;
 const app = express();
 const cookieParser = require('cookie-parser');
+require('dotenv').config();
+const googleMapsKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
 
 // parses JSON from incoming request
@@ -21,7 +23,12 @@ app.get('/', (req, res) => {
 
 //Signup
 app.post('/action/signup', userController.createUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
-    res.status(200).redirect('/home')
+    res.status(200).json(true);
+    // res.status(200).redirect('/home')
+})
+
+app.get('/action/getMapsKey', (req, res) => {
+    res.status(200).json(googleMapsKey);
 })
 
 //Checks user availability
@@ -32,16 +39,28 @@ app.get('/action/check/:username', userController.checkUser, (req, res) => {
 
 //Login
 app.post('/action/login', userController.verifyUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
-    if (res.locals.correctUser) {
-        res.status(200).redirect('/home')}
-    else {
-        res.json(res.locals.correctUser)
-    }
+    console.log('authentication completed, correctUser is ', res.locals.correctUser)
+    console.log('redirecting to home')
+    res.json(res.locals.correctUser)
+    // res.status(200).redirect('/home')
+    // }
+    // else {
+    //     res.json(res.locals.correctUser)
+    // }
 })
 
-//Homepage once logged in
+//Protect server side requests to protected pages
+app.get('/home', sessionController.isLoggedIn, (req, res) => {
+    res.status(200).json(res.locals.user)
+})
+
 app.get('/myLibrary', sessionController.isLoggedIn, (req, res) => {
     res.status(200).json(res.locals.user)
+})
+
+//Verify active session for client side requests to protected pages
+app.get('/action/auth', sessionController.isLoggedIn, (req, res) => {
+    res.status(200).json(true);
 })
 
 //Logout

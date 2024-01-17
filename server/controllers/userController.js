@@ -6,10 +6,10 @@ const userController = {};
 userController.createUser = (req, res, next) => {
     console.log("userController createUser running")
     console.log("request body ", req.body)
-    const { username, password, name, address, zipcode } = req.body;
+    const { username, password, name, address } = req.body;
 
     //Checks if any input fields are missing
-    if (!username || !name || !password || !address || !zipcode) {
+    if (!username || !name || !password || !address ) {
         return res.status(400).json({ error: 'All fields are required' });
     }
 
@@ -18,12 +18,11 @@ userController.createUser = (req, res, next) => {
         password,
         name,
         address,
-        zipcode
     })
         .then((data) => {
             res.locals.user = data;
             res.locals.userID = data._id.toString();
-            console.log('new use is ', res.locals.user, ' and id is ', res.locals.userID)
+            console.log('new user is ', res.locals.user, ' and id is ', res.locals.userID)
 
             return next()
         })
@@ -65,19 +64,22 @@ userController.verifyUser = (req, res, next) => {
                 bcrypt.compare(password, data.password, function (error, result) {
                     if (result) {
                         res.locals.user = data;
-                        res.locals.userID = data._id;
+                        res.locals.userID = data._id.toString();
                         res.locals.correctUser = true
+                        console.log('correct password, correct user is ', res.locals.correctUser)
                         return next();
                     }
                     else {
-                        res.locals.correctUser = false;
-                        return next();
+                        console.log('wrong password')
+                        return res.json(false);
+                        // res.locals.correctUser = false;
+                        // return next();
                     }
                 })
             } else {
-                console.log('data is null')
-                res.locals.correctUser = false;
-                res.json(false)
+                // res.locals.correctUser = false;
+                console.log('username not found')
+                return res.json(false)
             }
         })
 }
