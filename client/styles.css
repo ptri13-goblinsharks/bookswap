@@ -30,13 +30,13 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  /* margin-bottom: 270px; */
 }
 .home-searchbar {
   height: 30px;
   border-radius: 5px;
   border: 1px solid gray;
   padding: 10px;
-
-  /* margin-left: 20px; */
+}
+.bookswap-logo {
+  width: 120px;
 }

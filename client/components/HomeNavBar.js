@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import BookSwapLogo from '../assets/images/BookSwap.png';
 
 function HomeNavBar() {
   return (
     <nav className='home-navbar'>
       <Link to='/home'>
-        <h2>Home</h2>
+        <img src={BookSwapLogo} className='bookswap-logo' />
       </Link>
       <Link to='/myLibrary'>
         <h2>My Library</h2>

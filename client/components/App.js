@@ -9,7 +9,6 @@ import HomeNavBar from './HomeNavBar';
 function App() {
   return (
     <div>
-      {/* <HomeNavBar /> */}
       <Routes>
         <Route path='/home' element={<Home />} />
         <Route path='/' element={<Login />} />
