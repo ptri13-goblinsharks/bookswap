@@ -1,7 +1,8 @@
 const express = require('express');
 
-const databaseController = require('../controllers/libraryController');
+const libraryController = require('../controllers/libraryController');
 const userController = require('../controllers/userController');
+const apiController = require('../controllers/apiController')
 
 const router = express.Router();
 
@@ -17,7 +18,9 @@ router.post('/addBook',
   (req, res) => res.status(200).json(res.locals.userLibrary)
 )
 
-router.get('/getLibrary/:user',
-  userController.getLibrary,
+router.get('/getLibrary/:username',
+  libraryController.getUserLibrary,
   (req, res) => res.status(200).json(res.locals.userLibrary)
 )
+
+module.exports = router;

@@ -17,6 +17,16 @@ libraryController.checkLibrary = async (req, res, next) => {
   }
 };
 
+libraryController.getUserLibrary = async (req, res, next) => {
+  try {
+    const user = req.params;
+    const userLibrary = await models.User.findOne(user);
+    res.locals.userLibrary = userLibrary.books
+  } catch (error) {
+    
+  }
+};
+
 // libraryController.checkApi = async (req, res, next) => {
 //   // try {
 //   //   if (res.locals.title) {

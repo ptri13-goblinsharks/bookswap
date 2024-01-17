@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    const [ correctCredential, setCorrectCredential ] = useState(true);
+    const [correctCredential, setCorrectCredential] = useState(true);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    let navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -15,31 +17,36 @@ const Login = () => {
             },
             body: JSON.stringify({ username, password })
         })
-        .then(res => res.json())
-        .then(bool => setCorrectCredential(bool))
-        .catch(err => console.log('App: log in error:', err));
+            .then(res => res.json())
+            .then(bool => {
+                setCorrectCredential(bool);
+                if (bool) {
+                    navigate('/home');
+                }
+            })
+            .catch(err => console.log('App: log in error:', err));
     }
-    
+
     return (
         <div>
             <h1>Log in</h1>
             <form onSubmit={handleSubmit}>
                 <div>Username</div>
-                <input 
-                name="username" 
-                type="text" 
-                placeholder="username"
-                value={username}
-                onChange={e => setUsername(e.target.value)}/>
-                
+                <input
+                    name="username"
+                    type="text"
+                    placeholder="username"
+                    value={username}
+                    onChange={e => setUsername(e.target.value)} />
+
                 <div>Password</div>
-                <input 
-                name="password" 
-                type="password" 
-                placeholder="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}/>
-                
+                <input
+                    name="password"
+                    type="password"
+                    placeholder="password"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)} />
+
                 <div><button type="submit">Log in</button></div>
             </form>
             {!correctCredential && <div>Incorrect username or password.</div>}

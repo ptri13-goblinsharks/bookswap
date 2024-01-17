@@ -4,7 +4,8 @@
  * @module  AddBook.js
  * @author
  * @date
- * @description search bar that takes input and uses it to call to API
+ * @description search bar that takes input and uses it to call to openLibrary API
+ * https://openlibrary.org/developers/api
  *
  * ************************************
  */
@@ -23,7 +24,20 @@ const AddBook = () => {
 
 
     return (
-    <div>AddBook</div>
+    <><div> <input
+            className='add-search-bar'
+            type='text'
+            placeholder='Find a book in the global library'
+            value={searchBook}
+            onChange={(e) => setSearchBook(e.target.value)} /></div><div>
+                {selectedBook && (
+                    <ul>
+                        <li>{selectedBook.title}</li>
+                        <li>{selectedBook.author}</li>
+                        <li>{selectedBook.genre}</li>
+                    </ul>
+                )}
+            </div></>
     )
 }
 
