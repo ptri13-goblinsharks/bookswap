@@ -4,8 +4,7 @@
  * @module  AddBook.js
  * @author
  * @date
- * @description search bar that takes input and uses it to call to openLibrary API
- * https://openlibrary.org/developers/api
+ * @description search bar that takes input and adds book to personal library
  *
  * ************************************
  */
@@ -21,7 +20,8 @@ const AddBook = () => {
     const [searchBook, setSearchBook] = useState('');
     const [selectedBook, setSelectedBook] = useState('null');
   
-
+    //make POST request for book data: /library/addBook
+    //checks global library first before making API call, for performance
 
     return (
     <><div> <input
