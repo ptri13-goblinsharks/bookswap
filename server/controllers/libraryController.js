@@ -7,13 +7,14 @@ libraryController.checkLibrary = async (req, res, next) => {
     const title = {title: req.body.title};
     const book = await models.Book.findOne(title);
     if (book) {
+      console.log(book);
       res.locals.bookData = book;
     } else {
       res.locals.title = req.body.title;
     }
     return next();
   } catch (error) {
-
+    
   }
 };
 
