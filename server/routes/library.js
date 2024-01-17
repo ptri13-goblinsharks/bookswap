@@ -1,17 +1,23 @@
 const express = require('express');
 
-const libraryController = require('../controllers/libraryController');
+const databaseController = require('../controllers/libraryController');
 const userController = require('../controllers/userController');
 
 const router = express.Router();
 
 router.post('/findBook',
   libraryController.checkLibrary,
-  libraryController.checkApi,
+  apiController.checkApi,
   (req, res) => res.status(200).json(res.locals.bookData)
 );
 
 router.post('/addBook',
-  libraryController.addBookToGlobal,
-  
+  libraryController.addToGlobalLibrary,
+  userController.addToUserLibrary,
+  (req, res) => res.status(200).json(res.locals.userLibrary)
+)
+
+router.get('/getLibrary/:user',
+  userController.getLibrary,
+  (req, res) => res.status(200).json(res.locals.userLibrary)
 )

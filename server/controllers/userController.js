@@ -84,6 +84,10 @@ userController.verifyUser = (req, res, next) => {
 
 userController.addToUserLibrary = (req, res, next) => {
     
-}
+};
+
+userController.getLibrary = (req, res, next) => {
+
+};
 
 module.exports = userController;

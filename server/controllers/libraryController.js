@@ -17,17 +17,18 @@ libraryController.checkLibrary = async (req, res, next) => {
   }
 };
 
-libraryController.checkApi = async (req, res, next) => {
-  // try {
-  //   if (res.locals.title) {
+// libraryController.checkApi = async (req, res, next) => {
+//   // try {
+//   //   if (res.locals.title) {
       
-  //   }
-  // } catch (error) {
+//   //   }
+//   // } catch (error) {
     
-  // }
-};
+//   // }
+// };
 
-libraryController.addBookToGlobal = async (req, res, next) => {
+libraryController.addToGlobalLibrary = async (req, res, next) => {
+
 };
 
 libraryController.deleteBook = (req,res,next) => {
