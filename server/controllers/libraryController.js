@@ -63,6 +63,7 @@ libraryController.getAllBooks = (req, res, next) => {
   models.Book.find({})
     .then((data) => {
       res.locals.globalLibrary = data;
+      console.log(data)
       return next();
     })
     .catch((err) => {

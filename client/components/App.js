@@ -10,7 +10,6 @@ import ProtectedRoute from './ProtectedRoute.jsx';
 function App() {
   return (
     <div>
-      {/* <HomeNavBar /> */}
       <Routes>
         <Route path='/home' element={
           <ProtectedRoute>

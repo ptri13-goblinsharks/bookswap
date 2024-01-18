@@ -21,51 +21,6 @@ function HomeSearchBar() {
       genre: 'Classic',
       fullAddress: '789 Maple Ave, Pasadena, CA 91101',
     },
-    // { title: 'Pride and Prejudice', author: 'Jane Austen', genre: 'Romance' },
-    // { title: 'The Hobbit', author: 'J.R.R. Tolkien', genre: 'Fantasy' },
-    // {
-    //   title: 'The Catcher in the Rye',
-    //   author: 'J.D. Salinger',
-    //   genre: 'Coming-of-age',
-    // },
-    // {
-    //   title: "Harry Potter and the Sorcerer's Stone",
-    //   author: 'J.K. Rowling',
-    //   genre: 'Fantasy',
-    // },
-    // { title: 'To Kill a Mockingbird', author: 'Harper Lee', genre: 'Fiction' },
-    // {
-    //   title: 'The Lord of the Rings',
-    //   author: 'J.R.R. Tolkien',
-    //   genre: 'Fantasy',
-    // },
-    // { title: 'Brave New World', author: 'Aldous Huxley', genre: 'Dystopian' },
-    // {
-    //   title: 'The Chronicles of Narnia',
-    //   author: 'C.S. Lewis',
-    //   genre: 'Fantasy',
-    // },
-    // { title: 'Jane Eyre', author: 'Charlotte Brontë', genre: 'Classic' },
-    // { title: 'The Shining', author: 'Stephen King', genre: 'Horror' },
-    // {
-    //   title: "The Hitchhiker's Guide to the Galaxy",
-    //   author: 'Douglas Adams',
-    //   genre: 'Science Fiction',
-    // },
-    // { title: 'Frankenstein', author: 'Mary Shelley', genre: 'Gothic' },
-    // { title: 'Moby-Dick', author: 'Herman Melville', genre: 'Adventure' },
-    // { title: 'The Alchemist', author: 'Paulo Coelho', genre: 'Philosophical' },
-    // {
-    //   title: 'The Girl with the Dragon Tattoo',
-    //   author: 'Stieg Larsson',
-    //   genre: 'Mystery',
-    // },
-    // { title: 'Wuthering Heights', author: 'Emily Brontë', genre: 'Gothic' },
-    // {
-    //   title: 'The Grapes of Wrath',
-    //   author: 'John Steinbeck',
-    //   genre: 'Historical Fiction',
-    // },
   ];
 
   const [books, setBooks] = useState([]);
@@ -73,7 +28,12 @@ function HomeSearchBar() {
   const [selectedBook, setSelectedBook] = useState(null);
 
   useEffect(() => {
-    setBooks(mockBooks);
+    fetch('/action/globalLibrary')
+      .then((res) => res.json)
+      .then((data) => {
+        console.log(data);
+        books(data);
+      });
   }, []);
 
   const filteredBooks = books.filter((book) => {
@@ -86,39 +46,41 @@ function HomeSearchBar() {
   };
 
   return (
-    <div>
-      <input
-        className='home-search-bar'
-        type='text'
-        placeholder='Find book'
-        value={searchBook}
-        onChange={(e) => setSearchBook(e.target.value)}
-      />
-      <div>
-        {searchBook &&
-          filteredBooks.map((book, index) => (
-            <ul key={index}>
-              <li>{book.title}</li>
-              <li>{book.author}</li>
-              <li>{book.genre}</li>
-              <li>{book.fullAddress}</li>
-              <button onClick={() => handleBookSelect(book)}>
-                Show on map
-              </button>
+    <div className='home-container'>
+      <div className='search-container'>
+        <input
+          className='home-searchbar'
+          type='text'
+          placeholder='Find book'
+          value={searchBook}
+          onChange={(e) => setSearchBook(e.target.value)}
+        />
+        <div>
+          {searchBook &&
+            filteredBooks.map((book, index) => (
+              <ul key={index}>
+                <li>{book.title}</li>
+                <li>{book.author}</li>
+                <li>{book.genre}</li>
+                <li>{book.fullAddress}</li>
+                <button onClick={() => handleBookSelect(book)}>
+                  Show on map
+                </button>
+              </ul>
+            ))}
+        </div>
+        <div>
+          {selectedBook && (
+            <ul>
+              <li>{selectedBook.title}</li>
+              <li>{selectedBook.author}</li>
+              <li>{selectedBook.genre}</li>
+              <li>{selectedBook.fullAddress}</li>
             </ul>
-          ))}
+          )}
+        </div>
       </div>
-      <div>
-        {selectedBook && (
-          <ul>
-            <li>{selectedBook.title}</li>
-            <li>{selectedBook.author}</li>
-            <li>{selectedBook.genre}</li>
-            <li>{selectedBook.fullAddress}</li>
-          </ul>
-        )}
-      </div>
-      <GoogleMap selectedBook={selectedBook} />
+      <GoogleMap selectedBook={selectedBook} className='google-map' />
     </div>
   );
 }
