@@ -11,8 +11,6 @@
 
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { mockBooks } from './HomeSearchBar'
-
 
 
 const AddBook = () => {
@@ -24,8 +22,19 @@ const AddBook = () => {
     //checks global library first before making API call, for performance
 
     const handleBookSelect = (book) => {
-        setSelectedBook(book);
-        setSearchBook('');
+        fetch('/library/addBook', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+              },
+            body: JSON.stringify(book),
+        })
+        .then(data => data.json())
+        .then(data => {
+            setSelectedBook(data);
+            setSearchBook('');
+        })
+       
       };
       
     return (

@@ -20,7 +20,7 @@ const MyBooks = props => {
 
   return (
     <div>
-        {myBooks};
+        <ul className='myBooks'>{myBooks}</ul>
     </div>
   )
 }
