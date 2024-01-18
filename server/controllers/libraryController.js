@@ -41,15 +41,11 @@ libraryController.getUserLibrary = async (req, res, next) => {
 libraryController.addToGlobalLibrary = async (req, res, next) => {
   try {
     const { title, author, genre, olId, previewUrl } = req.body;
-    console.log(req.body)
-    console.log(olId);
     const checkBook = await models.Book.findOne({ olId });
-    console.log(checkBook);
     if (checkBook) {
       res.locals._id = checkBook._id;
     } else {
       const book = await models.Book.create({title, author, genre, olId, previewUrl});
-      console.log(book);
       res.locals._id = book._id;
     }
     return next();
