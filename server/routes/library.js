@@ -40,6 +40,17 @@ router.post(
   }
 );
 
+router.post('/action/sendSwapRequest', sessionController.isLoggedIn, userController.sendSwapRequest, (req, res) => {
+  res.status(200).json(res.locals.user);
+});
+
+router.post('/action/approveSwapRequest', sessionController.isLoggedIn, userController.approveSwapRequest, (req, res) => {
+  res.status(200).json(res.locals.user);
+});
+
+router.post('/action/rejectSwapRequest', sessionController.isLoggedIn, userController.rejectSwapRequest, (req, res) => {
+  res.status(200).json(res.locals.user);
+})
 // router.get('/getLibrary/:username',
 //   libraryController.getUserLibrary,
 //   (req, res) => res.status(200).json(res.locals.userLibrary)
