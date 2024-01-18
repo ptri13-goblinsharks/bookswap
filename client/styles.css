@@ -47,7 +47,7 @@
 
 body {
   font-family: Arial;
-  color: darkslategrey
+  color: rgb(66, 65, 65)
 }
 
 input {
@@ -74,7 +74,7 @@ button {
   font-size: 12pt;
 }
 
-button:hover{
+button:hover {
   background-color: rgb(123, 87, 223);
 }
 
@@ -84,15 +84,19 @@ a {
   color: rgb(92, 43, 226);
 }
 
-a:hover{
+a:hover {
   color:rgb(123, 87, 223);
 }
 
-.form-container{
+.form-container {
   justify-content: center;
   align-items: center;
   display: flex;
   flex-direction: column;
   height: 100vh;
   margin: 0;
+}
+
+.warning {
+  margin-bottom: 20px;
 }

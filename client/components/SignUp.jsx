@@ -148,8 +148,8 @@ const SignUp = () => {
                     }>Create user</button>
             </form>
             {availability ?
-                <div style={{ color: "#85BAA1", fontSize: "0.8em" }}>Username is available </div> :
-                <div style={{ color: "#A41409", fontSize: "0.8em" }}>Username is not available</div>
+                <div class="warning" style={{ color: "#85BAA1", fontSize: "0.8em" }}>Username is available </div> :
+                <div class="warning" style={{ color: "#A41409", fontSize: "0.8em" }}>Username is not available</div>
             }
             <div>Already a user? <a href="/">Sign in</a></div>
         </div>
