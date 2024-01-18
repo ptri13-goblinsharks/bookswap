@@ -25,6 +25,16 @@ const bookSchema = new Schema({
 
 const Book = mongoose.model('book', bookSchema);
 
+// notifications schema
+const notificationSchema = new Schema({
+  username: String,
+  message: String,
+  createdAt: { type: Date, default: Date.now },
+  read: { type: Boolean, default: false }
+})
+
+const Notification = mongoose.model('notification', notificationSchema);
+
 // Worked with Darren on userSchema
 
 const userSchema = new Schema({
@@ -33,11 +43,18 @@ const userSchema = new Schema({
   name: { type: String, required: true },
   address: { type: String, required: false },
   // zipcode: { type: Number, required: false },
-  books: [
-    { book: Schema.Types.ObjectId, ref: bookSchema },
-    { isAvailable: { type: Boolean, required: true } },
-    { isBorrowed: { borrowedFrom: String, borrowedOn: Date } },
-  ],
+  books: [{
+    book: { type: Schema.Types.ObjectId, ref: 'book' },
+    isAvailable: { type: Boolean },
+    isBorrowed: {
+      borrowedFrom: String,
+      borrowedOn: Date
+    },
+  }],
+  outgoingRequests: [{}],
+  incomingRequests: [{}],
+  notifications: [{}],
+  instructions: String
 });
 
 //Hashing password
@@ -59,4 +76,5 @@ const User = mongoose.model('user', userSchema);
 module.exports = {
   User,
   Book,
+  Notification
 };

@@ -7,6 +7,7 @@ libraryController.checkLibrary = async (req, res, next) => {
     const title = { title: req.body.title };
     const book = await models.Book.findOne(title);
     if (book) {
+      console.log(book);
       res.locals.bookData = book;
     } else {
       res.locals.title = req.body.title;
@@ -39,29 +40,30 @@ libraryController.getUserLibrary = async (req, res, next) => {
 
 libraryController.addToGlobalLibrary = async (req, res, next) => {
   try {
-    const { title, author, genre, olId } = req.body;
-    const checkBook = await models.Book.findOne(olId);
+    const { title, author, genre, olId, previewUrl } = req.body;
+    const checkBook = await models.Book.findOne({ olId });
     if (checkBook) {
       res.locals._id = checkBook._id;
     } else {
-      const book = await models.Book.create(title, author, genre, olId);
+      const book = await models.Book.create({title, author, genre, olId, previewUrl});
       res.locals._id = book._id;
     }
     return next();
   } catch (error) {
-    console.log('Error in addToGlobalLibrary middleware');
+    console.log('Error in addToGlobalLibrary middleware', error);
   }
 };
 
-libraryController.deleteBook = (req, res, next) => {};
+libraryController.deleteBook = (req, res, next) => { };
 
-libraryController.updateBook = (req, res, next) => {};
+libraryController.updateBook = (req, res, next) => { };
 
 // get all books in global library
 libraryController.getAllBooks = (req, res, next) => {
   models.Book.find({})
     .then((data) => {
       res.locals.globalLibrary = data;
+      console.log(data)
       return next();
     })
     .catch((err) => {
@@ -90,5 +92,6 @@ libraryController.retrieveBook = async (req, res, next) => {
     console.log('Error in libraryController.retrieveBook: ', error);
   }
 };
+
 
 module.exports = libraryController;

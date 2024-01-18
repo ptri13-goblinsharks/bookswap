@@ -77,6 +77,14 @@ app.get('/action/getLibrary', sessionController.isLoggedIn, (req, res) => {
   res.status(200).json(res.locals.user.books);
 });
 
+app.get('/action/getNotifications', sessionController.isLoggedIn, (req, res) => {
+  res.status(200).json(res.locals.user.notifications);
+})
+
+app.post('/action/markReadNotification', sessionController.isLoggedIn, userController.markReadNotification, (req, res) => {
+  res.status(200).json(res.locals.notification);
+})
+
 //Verify active session for client side requests to protected pages
 app.get('/action/auth', sessionController.isLoggedIn, (req, res) => {
   res.status(200).json(true);
@@ -89,11 +97,6 @@ app.get('/action/logout', sessionController.endSession, (req, res) => {
 });
 
 // Library
-// app.get('/action/getLibrary', sessionController.isLoggedIn, (req, res) => {
-//     console.log('get library running')
-//     res.status(200).json(res.locals.user.books)
-// });
-
 app.use('/library', libraryRouter);
 
 //Handler for 404
