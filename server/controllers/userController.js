@@ -246,14 +246,21 @@ userController.rejectSwapRequest = async (req, res, next) => {
 }
 
 userController.markReadNotification = async (req, res, next) => {
-    const { id } = req.body;
+    const { id } = req.params;
     try {
-        const notification = Notification.findOneAndUpdate(
+        const notice = await Notification.findOneAndUpdate(
             { _id: id },
             { read: true },
             { new: true }
         );
-        res.locals.notification = notification;
+        const notifications = res.locals.user.notifications;
+        notifications.push(notice);
+        const updatedUser = await User.findOneAndUpdate(
+            { username: res.locals.user.username },
+            { notifications },
+            { new: true }
+        );
+        res.locals.user = updatedUser;
         return next();
     } catch (error) {
         console.log('Error in userController.markReadNotification: ', error);

@@ -6,7 +6,7 @@ import Login from './Login.jsx';
 import MyLibrary from './MyLibrary';
 import HomeNavBar from './HomeNavBar';
 import ProtectedRoute from './ProtectedRoute.jsx';
-import Notifications from './Notifications.jsx';
+import Notifications from './notification/Notifications.jsx';
 import Profile from './Profile.jsx';
 
 
