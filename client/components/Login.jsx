@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BookSwapLogo from '../assets/images/BookSwap.png';
+
 
 const Login = () => {
     const [correctCredential, setCorrectCredential] = useState(true);
@@ -29,7 +31,9 @@ const Login = () => {
 
     return (
         <div className="form-container">
-            <h1>Sign in to your account</h1>
+            <img src={BookSwapLogo} className='bookswap-logo' />
+
+            <h2>Sign in to your account</h2>
             <form onSubmit={handleSubmit}>
                 <div>Username</div>
                 <input
@@ -46,7 +50,7 @@ const Login = () => {
                     onChange={e => setPassword(e.target.value)} />
 
                 <div><button type="submit"
-                class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >Sign in</button></div>
             </form>
             {!correctCredential && <div>Incorrect username or password.</div>}

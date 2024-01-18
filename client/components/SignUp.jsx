@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BookSwapLogo from '../assets/images/BookSwap.png';
 
 
 const SignUp = () => {
@@ -16,14 +17,14 @@ const SignUp = () => {
 
     useEffect(() => {
         fetch('/action/getMapsKey')
-        .then(res => res.json())
-        .then((key) => {
-            const script = document.createElement('script');
-            script.src = `https://maps.googleapis.com/maps/api/js?key=${key}&libraries=places`;
-            script.async = true;
-            document.head.appendChild(script);          
-        }) 
-        .catch(err => console.log('App: Error retrieving maps key ', err)) 
+            .then(res => res.json())
+            .then((key) => {
+                const script = document.createElement('script');
+                script.src = `https://maps.googleapis.com/maps/api/js?key=${key}&libraries=places`;
+                script.async = true;
+                document.head.appendChild(script);
+            })
+            .catch(err => console.log('App: Error retrieving maps key ', err))
     }, []);
 
 
@@ -95,7 +96,9 @@ const SignUp = () => {
 
     return (
         <div className="form-container">
-            <h1>Sign up</h1>
+            <img src={BookSwapLogo} className='bookswap-logo' />
+
+            <h2>Sign up</h2>
             <form onSubmit={handleSubmit}>
                 <div>Name</div>
                 <div><input
