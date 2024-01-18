@@ -15,7 +15,7 @@ import React from 'react'
 const MyBooks = props => {
 
     const myBooks = props.books.map(element => {
-        element.preview;
+        element.previewUrl;
     })
 
   return (
