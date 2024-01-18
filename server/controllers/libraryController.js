@@ -13,7 +13,7 @@ libraryController.checkLibrary = async (req, res, next) => {
     }
     return next();
   } catch (error) {
-
+    console.log('Error in CheckLibrary middleware')
   }
 };
 
@@ -23,7 +23,7 @@ libraryController.getUserLibrary = async (req, res, next) => {
     const userLibrary = await models.User.findOne(user);
     res.locals.userLibrary = userLibrary.books
   } catch (error) {
-    
+    console.log('Error in getUserLibrary middleware')
   }
 };
 
@@ -38,7 +38,19 @@ libraryController.getUserLibrary = async (req, res, next) => {
 // };
 
 libraryController.addToGlobalLibrary = async (req, res, next) => {
-
+    try {
+        const { title, author, genre, olId } = req.body;
+        const checkBook = await models.Book.findOne(olId)
+        if (checkBook) {
+            res.locals._id = checkBook._id
+        } else {
+            const book = await models.Book.create(title, author, genre, olId);
+            res.locals._id = book._id
+        }
+        return next();
+    } catch (error) {
+        console.log('Error in addToGlobalLibrary middleware')
+    }
 };
 
 libraryController.deleteBook = (req,res,next) => {

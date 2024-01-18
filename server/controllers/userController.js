@@ -85,7 +85,11 @@ userController.verifyUser = (req, res, next) => {
 }
 
 userController.addToUserLibrary = (req, res, next) => {
-    
+    const userId = res.locals.user._id
+    const bookId = res.locals._id
+    const currentBooks = res.locals.user.books
+    currentBooks.push([{book: bookId}, {isAvailable:true}])
+    User.findOneAndUpdate({_id:userId}, )
 };
 
 module.exports = userController;
