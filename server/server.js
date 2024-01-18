@@ -10,7 +10,7 @@ const googleMapsKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 app.use(express.json());
 app.use(cookieParser());
 
-//const libraryRouter = require('./routes/library');
+const libraryRouter = require('./routes/library');
 
 const userController = require('./controllers/userController');
 const cookieController = require('./controllers/cookieController');
@@ -94,12 +94,7 @@ app.get('/action/logout', sessionController.endSession, (req, res) => {
 //     res.status(200).json(res.locals.user.books)
 // });
 
-app.get('/action/getLibrary', sessionController.isLoggedIn, (req, res) => {
-    console.log('get library running')
-    res.status(200).json(res.locals.user.books)
-})
-
-//app.use('/library', libraryRouter);
+app.use('/library', libraryRouter);
 
 //Handler for 404
 app.use('*', (req, res) => {
