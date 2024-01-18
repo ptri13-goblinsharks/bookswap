@@ -1,6 +1,6 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 .home-navbar {
   display: flex;
@@ -47,6 +47,12 @@
 
 body {
   font-family: Arial;
+  /* justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0; */
 }
 
 input {
@@ -85,4 +91,13 @@ a {
 
 a:hover{
   color:rgb(123, 87, 223);
+}
+
+.form-container{
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
 }

@@ -28,7 +28,7 @@ const Login = () => {
     }
 
     return (
-        <div>
+        <div className="form-container">
             <h1>Sign in to your account</h1>
             <form onSubmit={handleSubmit}>
                 <div>Username</div>
