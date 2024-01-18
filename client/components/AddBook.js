@@ -4,16 +4,13 @@
  * @module  AddBook.js
  * @author
  * @date
- * @description search bar that takes input and uses it to call to openLibrary API
- * https://openlibrary.org/developers/api
+ * @description search bar that takes input and adds book to personal library
  *
  * ************************************
  */
 
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { mockBooks } from './HomeSearchBar'
-
 
 
 const AddBook = () => {
@@ -21,13 +18,30 @@ const AddBook = () => {
     const [searchBook, setSearchBook] = useState('');
     const [selectedBook, setSelectedBook] = useState('null');
   
+    //make POST request for book data: /library/addBook
+    //checks global library first before making API call, for performance
 
-
+    const handleBookSelect = (book) => {
+        fetch('/library/addBook', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+              },
+            body: JSON.stringify(book),
+        })
+        .then(data => data.json())
+        .then(data => {
+            setSelectedBook(data);
+            setSearchBook('');
+        })
+       
+      };
+      
     return (
     <><div> <input
             className='add-search-bar'
             type='text'
-            placeholder='Find a book in the global library'
+            placeholder='Add a book'
             value={searchBook}
             onChange={(e) => setSearchBook(e.target.value)} /></div><div>
                 {selectedBook && (
