@@ -132,3 +132,8 @@ h2 {
 .notifications-container {
   padding: 20px;
 }
+
+.request-container {
+  display: flex;
+  gap: 20px;
+}

@@ -6,14 +6,14 @@ const Requests = () => {
     const [user, setUser] = useState({
         username: 'trang',
         outgoingRequests: [
-            { title: 'Outgoing test book 1', reqUsername: 'trang', resUsername: 'ross/russ' },
-            { title: 'Outgoing test book 2', reqUsername: 'trang', resUsername: 'ross/russ' },
-            { title: 'Outgoing test book 3', reqUsername: 'trang', resUsername: 'ross/russ' }
+            { title: 'Tom Sawyer', reqUsername: 'trang', resUsername: 'ross/russ' },
+            { title: 'Great Gatsby', reqUsername: 'trang', resUsername: 'ross/russ' },
+            { title: 'Siddhartha', reqUsername: 'trang', resUsername: 'ross/russ' }
         ],
         incomingRequests: [
-            { title: 'Incoming test book 1', reqUsername: 'ross/russ', resUsername: 'trang' },
-            { title: 'Incoming test book 2', reqUsername: 'ross/russ', resUsername: 'trang' },
-            { title: 'Incoming test book 3', reqUsername: 'ross/russ', resUsername: 'trang' }
+            { title: 'Harry Potter', reqUsername: 'ross/russ', resUsername: 'trang' },
+            { title: 'Great Expectations', reqUsername: 'ross/russ', resUsername: 'trang' },
+            { title: 'Mary Poppins', reqUsername: 'ross/russ', resUsername: 'trang' }
 
         ]
     });
@@ -52,7 +52,7 @@ const Requests = () => {
     }
 
     const outgoingRequestElems = user.outgoingRequests.map((request, i) => (
-        <div key={i}>
+        <div key={i} style = {{width: '250px'}}>
             <RequestCard
                 title={request.title}
                 reqUsername={request.resUsername}
@@ -62,7 +62,7 @@ const Requests = () => {
     ))
 
     const incomingRequestElems = user.incomingRequests.map((request, i) => (
-        <div key={i}>
+        <div key={i} style = {{width: '250px'}}>
             <RequestCard
                 title={request.title}
                 reqUsername={request.resUsername}
@@ -76,10 +76,10 @@ const Requests = () => {
     return (
         <div>
             <h4>Pending Requests by You</h4>
-            <div>{outgoingRequestElems}</div>
+            <div className='request-container'>{outgoingRequestElems}</div>
 
             <h4>Incoming Requests for Your Books</h4>
-            <div>{incomingRequestElems}</div>
+            <div className='request-container'>{incomingRequestElems}</div>
         </div>
     )
 
