@@ -89,11 +89,6 @@ app.get('/action/logout', sessionController.endSession, (req, res) => {
 });
 
 // Library
-// app.get('/action/getLibrary', sessionController.isLoggedIn, (req, res) => {
-//     console.log('get library running')
-//     res.status(200).json(res.locals.user.books)
-// });
-
 app.use('/library', libraryRouter);
 
 //Handler for 404
