@@ -29,13 +29,12 @@ const Login = () => {
 
     return (
         <div>
-            <h1>Log in</h1>
+            <h1>Sign in to your account</h1>
             <form onSubmit={handleSubmit}>
                 <div>Username</div>
                 <input
                     name="username"
                     type="text"
-                    placeholder="username"
                     value={username}
                     onChange={e => setUsername(e.target.value)} />
 
@@ -43,11 +42,12 @@ const Login = () => {
                 <input
                     name="password"
                     type="password"
-                    placeholder="password"
                     value={password}
                     onChange={e => setPassword(e.target.value)} />
 
-                <div><button type="submit">Log in</button></div>
+                <div><button type="submit"
+                class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >Sign in</button></div>
             </form>
             {!correctCredential && <div>Incorrect username or password.</div>}
             <div>Not a user yet? <a href="signup">Sign up</a></div>

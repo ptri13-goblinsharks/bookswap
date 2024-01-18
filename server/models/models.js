@@ -33,11 +33,16 @@ const userSchema = new Schema({
   name: { type: String, required: true },
   address: { type: String, required: false },
   // zipcode: { type: Number, required: false },
-  books: [
-    { book: Schema.Types.ObjectId, ref: bookSchema },
-    { isAvailable: { type: Boolean, required: true } },
-    { isBorrowed: { borrowedFrom: String, borrowedOn: Date } },
-  ],
+  books: [{
+    book: { type: Schema.Types.ObjectId, ref: 'book' },
+    isAvailable: { type: Boolean },
+    isBorrowed: {
+      borrowedFrom: String,
+      borrowedOn: Date
+    },
+  }],
+  outgoingRequests: [{}],
+  incomingRequests: [{}]
 });
 
 //Hashing password

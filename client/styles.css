@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .home-navbar {
   display: flex;
   flex-direction: row;
@@ -39,4 +43,46 @@
 }
 .bookswap-logo {
   width: 120px;
+}
+
+body {
+  font-family: Arial;
+}
+
+input {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5pt;
+  border: 1pt solid lightgray;
+  border-radius: 5px;
+  width: 350px;
+  height: 25px;
+}
+
+button {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 5pt;
+  border: none;
+  border-radius: 5px;
+  width: 365px;
+  height: 40px;
+  background-color: rgb(92, 43, 226);
+  color: white;
+  font-weight: bold;
+  font-size: 12pt;
+}
+
+button:hover{
+  background-color: rgb(123, 87, 223);
+}
+
+a {
+  font-weight: bold;
+  text-decoration: none;
+  color: rgb(92, 43, 226);
+}
+
+a:hover{
+  color:rgb(123, 87, 223);
 }
