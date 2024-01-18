@@ -7,6 +7,8 @@ import MyLibrary from './MyLibrary';
 import HomeNavBar from './HomeNavBar';
 import ProtectedRoute from './ProtectedRoute.jsx';
 import Notifications from './Notifications.jsx';
+import Profile from './Profile.jsx';
+
 
 function App() {
   return (
@@ -24,7 +26,16 @@ function App() {
             <MyLibrary />
           </ProtectedRoute>
         } />
-        <Route path='/notifications' element={<Notifications />} />
+        <Route path='/notifications' element={
+          <ProtectedRoute>
+            <Notifications />
+          </ProtectedRoute>
+        } />
+        <Route path='/profile' element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        } />
       </Routes>
     </div>
   );

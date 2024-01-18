@@ -72,12 +72,21 @@ app.get('/myLibrary', sessionController.isLoggedIn, (req, res) => {
   res.status(200).json(res.locals.user);
 });
 
+app.get('/action/getUser', sessionController.isLoggedIn, (req, res) => {
+  res.status(200).json(res.locals.user);
+})
+
+app.post('/action/updateUser', sessionController.isLoggedIn, userController.updateUserProfile, (req, res) => {
+  res.status(200).json(res.locals.user);
+})
+
 app.get('/action/getLibrary', sessionController.isLoggedIn, (req, res) => {
   console.log('get library running');
   res.status(200).json(res.locals.user.books);
 });
 
 app.get('/action/getNotifications', sessionController.isLoggedIn, (req, res) => {
+  console.log('get notifications running');
   res.status(200).json(res.locals.user.notifications);
 })
 

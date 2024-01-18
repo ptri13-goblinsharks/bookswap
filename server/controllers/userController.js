@@ -88,6 +88,25 @@ userController.verifyUser = (req, res, next) => {
     });
 };
 
+userController.updateUserProfile = async (req, res, next) => {
+    console.log('update user profile running')
+    const { name, address, instructions } = req.body;
+    console.log('name, address and instructions are ', name, address, instructions);
+    try {
+        const updatedUser = await User.findOneAndUpdate(
+            { username: res.locals.user.username },
+            { name, address, instructions },
+            { new: true }
+        );
+        res.locals.user = updatedUser;
+        console.log('updated user is ,', updatedUser)
+        return next();
+    } catch (error) {
+        console.log("userController.updateUserError");
+        return next(error);
+    }
+}
+
 userController.addToUserLibrary = async (req, res, next) => {
     const userId = res.locals.user._id;
     const bookId = res.locals._id;
