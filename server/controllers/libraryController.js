@@ -1,4 +1,4 @@
-const models = require("../models/models.js");
+const models = require('../models/models.js');
 
 const libraryController = {};
 
@@ -14,7 +14,7 @@ libraryController.checkLibrary = async (req, res, next) => {
     }
     return next();
   } catch (error) {
-    console.log("Error in CheckLibrary middleware");
+    console.log('Error in CheckLibrary middleware');
   }
 };
 
@@ -24,7 +24,7 @@ libraryController.getUserLibrary = async (req, res, next) => {
     const userLibrary = await models.User.findOne(user);
     res.locals.userLibrary = userLibrary.books;
   } catch (error) {
-    console.log("Error in getUserLibrary middleware");
+    console.log('Error in getUserLibrary middleware');
   }
 };
 
@@ -40,17 +40,21 @@ libraryController.getUserLibrary = async (req, res, next) => {
 
 libraryController.addToGlobalLibrary = async (req, res, next) => {
   try {
-    const { title, author, genre, olId } = req.body;
-    const checkBook = await models.Book.findOne(olId);
+    const { title, author, genre, olId, previewUrl } = req.body;
+    console.log(req.body)
+    console.log(olId);
+    const checkBook = await models.Book.findOne({ olId });
+    console.log(checkBook);
     if (checkBook) {
       res.locals._id = checkBook._id;
     } else {
-      const book = await models.Book.create(title, author, genre, olId);
+      const book = await models.Book.create({title, author, genre, olId, previewUrl});
+      console.log(book);
       res.locals._id = book._id;
     }
     return next();
   } catch (error) {
-    console.log("Error in addToGlobalLibrary middleware");
+    console.log('Error in addToGlobalLibrary middleware', error);
   }
 };
 
@@ -68,9 +72,9 @@ libraryController.getAllBooks = (req, res, next) => {
     })
     .catch((err) => {
       return next({
-        log: "libraryController.getAllBooks error",
+        log: 'libraryController.getAllBooks error',
         status: 400,
-        message: { err: "error getting all books from global library" },
+        message: { err: 'error getting all books from global library' },
       });
     });
 };
@@ -89,7 +93,7 @@ libraryController.retrieveBook = async (req, res, next) => {
     console.log(results);
     return next();
   } catch (error) {
-    console.log("Error in libraryController.retrieveBook: ", error);
+    console.log('Error in libraryController.retrieveBook: ', error);
   }
 };
 

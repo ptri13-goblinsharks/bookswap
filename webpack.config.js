@@ -40,7 +40,7 @@ module.exports = {
     open: true,
     proxy: {
       '/action': 'http://localhost:3000',
-      '/library': 'http://localhost:3000'
+      '/library': 'http://localhost:3000',
     },
     historyApiFallback: true,
 
