@@ -92,6 +92,11 @@ button:disabled {
   background-color: rgb(183, 170, 216);
 }
 
+button.small {
+  width: 100px;
+  margin-right: 20px;
+}
+
 a {
   font-weight: bold;
   text-decoration: none;
@@ -121,7 +126,7 @@ h3 {
 }
 
 h2 {
-  font-size: 13pt;
+  font-size: 12pt;
 }
 
 .notifications-container {

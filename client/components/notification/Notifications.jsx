@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import HomeNavBar from '../HomeNavBar';
 import Note from './Note.jsx';
+import Requests from './Requests.jsx';
 
 const Notifications = () => {
     const [notifications, setNotifications] = useState([]);
@@ -37,9 +38,10 @@ const Notifications = () => {
     return (
         <div>
             <HomeNavBar />
-            <div className="notifications-container">
+            {/* <div className="notifications-container">
                 {notificationElems.length > 0 ? notification.Elems : <div>No notifications yet</div>}
-            </div>
+            </div> */}
+            <Requests />
         </div>
     )
 }
