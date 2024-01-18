@@ -106,4 +106,26 @@ userController.addToUserLibrary = async (req, res, next) => {
     };
 };
 
+userController.sendSubmitRequest = async (req, res, next) => {
+    const { username, title } = req.body;
+    const currentOutgoingSwaps = res.locals.user.outgoingSwaps;
+    currentOutgoingSwaps.push({ username, title });
+    try {
+      const updatedUser = User.findOneAndUpdate(
+        { username: res.locals.username },
+        { outgoingSwaps: currentOutgoingSwaps },
+        { new: true }
+      );
+      const receivingUser = User.findOneAndUpdate({  });
+    } catch (error) {}
+  
+    // newBooks.push()
+    // User.findOneAndUpdate(
+    //   { username: res.locals.username },
+    //   { },
+    //   {})
+    return next();
+  };
+
+
 module.exports = userController;

@@ -59,7 +59,7 @@ libraryController.updateBook = (req, res, next) => {};
 
 // get all books in global library
 libraryController.getAllBooks = (req, res, next) => {
-  Book.find({})
+  models.Book.find({})
     .then((data) => {
       res.locals.globalLibrary = data;
       return next();
@@ -78,7 +78,7 @@ libraryController.retrieveBook = async (req, res, next) => {
   try {
     // find all books
     const results = await models.User.aggregate([
-      { $unwind: '$books' },
+      { $unwind: "$books" },
       { $match: { books: title, isAvailable: true } },
       { $project: { _id: 0, username: 1, address: 1, books: 1 } },
     ]);
@@ -90,5 +90,7 @@ libraryController.retrieveBook = async (req, res, next) => {
     console.log("Error in libraryController.retrieveBook: ", error);
   }
 };
+
+
 
 module.exports = libraryController;

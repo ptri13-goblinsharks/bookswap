@@ -34,4 +34,9 @@ router.post('/action/retrieveBook', libraryController.retrieveBook, (req, res) =
 //   (req, res) => res.status(200).json(res.locals.userLibrary)
 // )
 
+//
+router.post('/action/swapRequest', sessionController.isLoggedIn, userController.sendSubmitRequest, (req, res) => {
+  res.status(200).json();
+})
+
 module.exports = router;
