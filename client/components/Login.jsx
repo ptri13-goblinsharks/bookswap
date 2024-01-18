@@ -33,7 +33,7 @@ const Login = () => {
         <div className="form-container">
             <img src={BookSwapLogo} className='bookswap-logo' />
 
-            <h2>Sign in to your account</h2>
+            <h3>Sign in to your account</h3>
             <form onSubmit={handleSubmit}>
                 <div>Username</div>
                 <input

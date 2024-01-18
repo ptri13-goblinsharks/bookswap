@@ -98,7 +98,7 @@ const SignUp = () => {
         <div className="form-container">
             <img src={BookSwapLogo} className='bookswap-logo' />
 
-            <h2>Sign up</h2>
+            <h3>Sign up</h3>
             <form onSubmit={handleSubmit}>
                 <div>Name</div>
                 <div><input
