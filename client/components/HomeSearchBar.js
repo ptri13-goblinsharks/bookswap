@@ -28,10 +28,11 @@ function HomeSearchBar() {
   const [selectedBook, setSelectedBook] = useState(null);
 
   useEffect(() => {
-    fetch('./action/getLibrary')
-      .then((res) => res.json())
+    fetch('/action/globalLibrary')
+      .then((res) => res.json)
       .then((data) => {
         console.log(data);
+        books(data);
       });
   }, []);
 
