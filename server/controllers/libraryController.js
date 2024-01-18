@@ -58,9 +58,9 @@ libraryController.addToGlobalLibrary = async (req, res, next) => {
   }
 };
 
-libraryController.deleteBook = (req, res, next) => {};
+libraryController.deleteBook = (req, res, next) => { };
 
-libraryController.updateBook = (req, res, next) => {};
+libraryController.updateBook = (req, res, next) => { };
 
 // get all books in global library
 libraryController.getAllBooks = (req, res, next) => {
@@ -96,5 +96,6 @@ libraryController.retrieveBook = async (req, res, next) => {
     console.log('Error in libraryController.retrieveBook: ', error);
   }
 };
+
 
 module.exports = libraryController;

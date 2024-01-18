@@ -11,7 +11,9 @@ function HomeNavBar() {
       <Link to='/myLibrary'>
         <h2>My Library</h2>
       </Link>
-      {/* <button>Log out</button> */}
+      <Link to='/notifications'>
+        <h2>Notifications</h2>
+      </Link>
       <h2>
         <a href='/action/logout'>Log out</a>
       </h2>
