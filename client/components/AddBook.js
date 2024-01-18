@@ -23,6 +23,11 @@ const AddBook = () => {
     //make POST request for book data: /library/addBook
     //checks global library first before making API call, for performance
 
+    const handleBookSelect = (book) => {
+        setSelectedBook(book);
+        setSearchBook('');
+      };
+      
     return (
     <><div> <input
             className='add-search-bar'
