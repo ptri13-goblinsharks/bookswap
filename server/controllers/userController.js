@@ -184,6 +184,7 @@ userController.approveSwapRequest = async (req, res, next) => {
         return next();
     } catch (error) {
         console.log('error in userController.approveRequest: ', error);
+        return next(error);
     }
 }
 
@@ -221,6 +222,23 @@ userController.rejectSwapRequest = async (req, res, next) => {
         return next();
     } catch (error) {
         console.log('Error in userController.rejectSwapRequest: ', error);
+        return next(error);
+    }
+}
+
+userController.markReadNotification = async (req, res, next) => {
+    const { id } = req.body;
+    try {
+        const notification = Notification.findOneAndUpdate(
+            { _id: id },
+            { read: true },
+            { new: true }
+        );
+        res.locals.notification = notification;
+        return next();
+    } catch (error) {
+        console.log('Error in userController.markReadNotification: ', error);
+        return next(error);
     }
 }
 

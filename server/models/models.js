@@ -30,7 +30,7 @@ const notificationSchema = new Schema({
   username: String,
   message: String,
   createdAt: { type: Date, default: Date.now },
-  read: Boolean
+  read: { type: Boolean, default: false }
 })
 
 const Notification = mongoose.model('notification', notificationSchema);
