@@ -6,21 +6,11 @@ import AddBook from './AddBook';
 import MyBooks from './MyBooks';
 import { useSelector } from 'react-redux';
 
-const MyLibrary = () => {
-    
-    
-    //call to personal library 
-    // route is '/getLibrary/' - 
-    
+const MyLibrary = () => {    
 
 // pull library data from DB here and pass to search bar as props.
 
     const [myLibraryBooks, setMyLibraryBooks] = useState([]);
-
-    // fetch('/action/getLibrary')
-    // .then (data => {
-    //     setMyLibraryBooks(data.json());
-    // })
 
   useEffect( () => {
     fetch('/action/getLibrary')
@@ -32,7 +22,6 @@ const MyLibrary = () => {
     })
   }, [])
 
-  //console.log(`current state: ${myLibraryBooks}`)
 
   return (
     <div>
