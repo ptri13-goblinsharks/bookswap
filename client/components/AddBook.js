@@ -22,7 +22,7 @@ const AddBook = () => {
     //checks global library first before making API call, for performance
 
     const handleBookSelect = (book) => {
-        fetch('/library/addBook', {
+        fetch('/library/action/addBook', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
@@ -49,6 +49,9 @@ const AddBook = () => {
                         <li>{selectedBook.title}</li>
                         <li>{selectedBook.author}</li>
                         <li>{selectedBook.genre}</li>
+                        <button onClick={() => handleBookSelect(searchBook)}>
+                  Add Book
+                </button>
                     </ul>
                 )}
             </div></>
