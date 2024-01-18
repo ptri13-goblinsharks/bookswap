@@ -6,11 +6,11 @@ import Login from './Login.jsx';
 import MyLibrary from './MyLibrary';
 import HomeNavBar from './HomeNavBar';
 import ProtectedRoute from './ProtectedRoute.jsx';
+import Notifications from './Notifications.jsx';
 
 function App() {
   return (
     <div>
-      {/* <HomeNavBar /> */}
       <Routes>
         <Route path='/home' element={
           <ProtectedRoute>
@@ -24,6 +24,7 @@ function App() {
             <MyLibrary />
           </ProtectedRoute>
         } />
+        <Route path='/notifications' element={<Notifications />} />
       </Routes>
     </div>
   );

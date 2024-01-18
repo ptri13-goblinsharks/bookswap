@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BookSwapLogo from '../assets/images/BookSwap.png';
 
 
 const SignUp = () => {
@@ -11,19 +12,20 @@ const SignUp = () => {
         password: '',
         name: '',
         address: '',
+        instructions: '',
         // zipcode: '',
     })
 
     useEffect(() => {
         fetch('/action/getMapsKey')
-        .then(res => res.json())
-        .then((key) => {
-            const script = document.createElement('script');
-            script.src = `https://maps.googleapis.com/maps/api/js?key=${key}&libraries=places`;
-            script.async = true;
-            document.head.appendChild(script);          
-        }) 
-        .catch(err => console.log('App: Error retrieving maps key ', err)) 
+            .then(res => res.json())
+            .then((key) => {
+                const script = document.createElement('script');
+                script.src = `https://maps.googleapis.com/maps/api/js?key=${key}&libraries=places`;
+                script.async = true;
+                document.head.appendChild(script);
+            })
+            .catch(err => console.log('App: Error retrieving maps key ', err))
     }, []);
 
 
@@ -76,6 +78,7 @@ const SignUp = () => {
             address: userData.address,
             username: userData.username,
             password: userData.password,
+            instructions: userData.instructions
         };
         fetch('/action/signup', {
             method: 'POST',
@@ -94,8 +97,10 @@ const SignUp = () => {
     }
 
     return (
-        <div>
-            <h1>Sign up</h1>
+        <div className="form-container">
+            <img src={BookSwapLogo} className='bookswap-logo' />
+
+            <h3>Sign up</h3>
             <form onSubmit={handleSubmit}>
                 <div>Name</div>
                 <div><input
@@ -118,6 +123,15 @@ const SignUp = () => {
                     type="text"
                     value={userData.zipcode}
                     onChange={handleUserDataChange} /></div> */}
+
+                <div>Pick up instructions (Optional)</div>
+                <div><input 
+                name="instructions"
+                type="text"
+                placeholder="e.g. pick up from doorman, or contact me at email / phone"
+                value={userData.instructions}
+                onChange={handleUserDataChange}
+                /></div>
 
                 <div>Username</div>
                 <div><input
@@ -145,8 +159,8 @@ const SignUp = () => {
                     }>Create user</button>
             </form>
             {availability ?
-                <div style={{ color: "#85BAA1", fontSize: "0.8em" }}>Username is available </div> :
-                <div style={{ color: "#A41409", fontSize: "0.8em" }}>Username is not available</div>
+                <div class="warning" style={{ color: "#85BAA1", fontSize: "0.8em" }}>Username is available </div> :
+                <div class="warning" style={{ color: "#A41409", fontSize: "0.8em" }}>Username is not available</div>
             }
             <div>Already a user? <a href="/">Sign in</a></div>
         </div>

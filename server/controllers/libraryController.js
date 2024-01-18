@@ -1,4 +1,4 @@
-const models = require("../models/models.js");
+const models = require('../models/models.js');
 
 const libraryController = {};
 
@@ -13,7 +13,7 @@ libraryController.checkLibrary = async (req, res, next) => {
     }
     return next();
   } catch (error) {
-    console.log("Error in CheckLibrary middleware");
+    console.log('Error in CheckLibrary middleware');
   }
 };
 
@@ -23,7 +23,7 @@ libraryController.getUserLibrary = async (req, res, next) => {
     const userLibrary = await models.User.findOne(user);
     res.locals.userLibrary = userLibrary.books;
   } catch (error) {
-    console.log("Error in getUserLibrary middleware");
+    console.log('Error in getUserLibrary middleware');
   }
 };
 
@@ -49,13 +49,13 @@ libraryController.addToGlobalLibrary = async (req, res, next) => {
     }
     return next();
   } catch (error) {
-    console.log("Error in addToGlobalLibrary middleware");
+    console.log('Error in addToGlobalLibrary middleware');
   }
 };
 
-libraryController.deleteBook = (req, res, next) => {};
+libraryController.deleteBook = (req, res, next) => { };
 
-libraryController.updateBook = (req, res, next) => {};
+libraryController.updateBook = (req, res, next) => { };
 
 // get all books in global library
 libraryController.getAllBooks = (req, res, next) => {
@@ -66,9 +66,9 @@ libraryController.getAllBooks = (req, res, next) => {
     })
     .catch((err) => {
       return next({
-        log: "libraryController.getAllBooks error",
+        log: 'libraryController.getAllBooks error',
         status: 400,
-        message: { err: "error getting all books from global library" },
+        message: { err: 'error getting all books from global library' },
       });
     });
 };
@@ -87,10 +87,9 @@ libraryController.retrieveBook = async (req, res, next) => {
     console.log(results);
     return next();
   } catch (error) {
-    console.log("Error in libraryController.retrieveBook: ", error);
+    console.log('Error in libraryController.retrieveBook: ', error);
   }
 };
-
 
 
 module.exports = libraryController;
