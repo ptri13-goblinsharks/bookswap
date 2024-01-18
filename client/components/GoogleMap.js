@@ -38,7 +38,7 @@ function GoogleMap({ selectedBook }) {
 
   return (
     <APIProvider apiKey={apiKey}>
-      <div style={{ height: '50vh', width: '70%' }}>
+      <div style={{ height: '50vh', width: '50%' }}>
         <Map zoom={9} center={position} mapId={'49e4b9ad955c530'}>
           {selectedBook && (
             <AdvancedMarker
