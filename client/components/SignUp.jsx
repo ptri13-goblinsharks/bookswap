@@ -12,6 +12,7 @@ const SignUp = () => {
         password: '',
         name: '',
         address: '',
+        instructions: '',
         // zipcode: '',
     })
 
@@ -77,6 +78,7 @@ const SignUp = () => {
             address: userData.address,
             username: userData.username,
             password: userData.password,
+            instructions: userData.instructions
         };
         fetch('/action/signup', {
             method: 'POST',
@@ -121,6 +123,15 @@ const SignUp = () => {
                     type="text"
                     value={userData.zipcode}
                     onChange={handleUserDataChange} /></div> */}
+
+                <div>Pick up instructions (Optional)</div>
+                <div><input 
+                name="instructions"
+                type="text"
+                placeholder="e.g. pick up from doorman, or contact me at email / phone"
+                value={userData.instructions}
+                onChange={handleUserDataChange}
+                /></div>
 
                 <div>Username</div>
                 <div><input

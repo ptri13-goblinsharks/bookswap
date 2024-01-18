@@ -87,6 +87,10 @@ button:hover {
   background-color: rgb(123, 87, 223);
 }
 
+button:disabled {
+  background-color: rgb(183, 170, 216);
+}
+
 a {
   font-weight: bold;
   text-decoration: none;
@@ -111,6 +115,6 @@ a:hover {
 }
 
 h3 {
-  margin: 50px;
+  margin: 40px;
   font-size: 18pt;
 }

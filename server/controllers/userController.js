@@ -1,5 +1,5 @@
 const bcrypt = require("bcryptjs");
-const { User } = require("../models/models");
+const { User, Notification, Book } = require("../models/models");
 
 const userController = {};
 
@@ -111,90 +111,118 @@ userController.sendSwapRequest = async (req, res, next) => {
     const outgoingRequests = res.locals.user.outgoingRequests;
     outgoingRequests.push({ title, reqUsername, resUsername });
     try {
-      // update the current user's outgoing requests
-      const updatedReqUser = await models.User.findOneAndUpdate(
-        { username: res.locals.user.username },
-        { outgoingRequests },
-        { new: true }
-      );
-      // update the other users's incoming requests
-      const resUser = await models.User.findOne({ username: resUsername });
-      const incomingRequests = resUser.incomingRequests;
-      incomingRequests.push({ title, reqUsername, resUsername })
-      const updatedResUser = await models.User.findOneAndUpdate(
-        { username: resUsername },
-        { incomingRequests },
-        { new: true }
-      );
-      res.locals.user = updatedReqUser;
-      return next();
+        // update the current user's outgoing requests
+        const updatedReqUser = await models.User.findOneAndUpdate(
+            { username: res.locals.user.username },
+            { outgoingRequests },
+            { new: true }
+        );
+        res.locals.user = updatedReqUser;
+
+        // update the other users's incoming requests and send a notification
+        const resUser = await models.User.findOne({ username: resUsername });
+        const incomingRequests = resUser.incomingRequests;
+        incomingRequests.push({ title, reqUsername, resUsername })
+        const notifications = resUser.notifications;
+        const newNotification = await Notification.create({
+            username: resUsername,
+            message: 'You have received a new swap request',
+            read: false
+        });
+        notifications.push(newNotification);
+        const updatedResUser = await models.User.findOneAndUpdate(
+            { username: resUsername },
+            {
+                incomingRequests,
+                notifications
+            },
+            { new: true }
+        );
+        return next();
     } catch (error) {
-      console.log('error in userController.sendSwapRequests: ', err);
+        console.log('error in userController.sendSwapRequests: ', err);
     }
-  }
-  
-  userController.approveSwapRequest = async (req, res, next) => {
+}
+
+userController.approveSwapRequest = async (req, res, next) => {
     const { title, reqUsername, resUsername } = req.body;
     //update resUser with updated incoming requests and books
     const incomingRequests = res.locals.user.incomingRequests;
     const updatedIncomingRequests = incomingRequests.filter(request => request.title !== title);
     const updatedResBooks = res.locals.user.books.filter(el => el.book.title !== title);
     try {
-      const updatedResUser = await models.User.findOneAndUpdate(
-        { username: res.locals.user.username },
-        {
-          incomingRequests: updatedIncomingRequests,
-          books: updatedResBooks
-        },
-        { new: true }
-      );
-      res.locals.user = updatedUser;
-      // update reqUser with updated outgoing requests and books
-      const reqUser = await models.User.findOne({ username: reqUsername });
-      const updatedOutgoingRequests = reqUser.outgoingRequests.filter(request => request.title !== title);
-      const reqBooks = reqUser.books;
-      const swappedBook = await models.Book.findOne({ title })
-      reqBooks.push({ book: swappedBook })
-      const updatedReqUser = await models.User.findOneAndUpdate(
-        { username: reqUsername },
-        {
-          outgoingRequests: updatedOutgoingRequests,
-          books: reqBooks
-        },
-        { new: true }
-      );
-      return next();
+        const updatedResUser = await models.User.findOneAndUpdate(
+            { username: res.locals.user.username },
+            {
+                incomingRequests: updatedIncomingRequests,
+                books: updatedResBooks
+            },
+            { new: true }
+        );
+        res.locals.user = updatedResUser;
+        // update reqUser with updated outgoing requests and books, and send a notification
+        const reqUser = await models.User.findOne({ username: reqUsername });
+        const updatedOutgoingRequests = reqUser.outgoingRequests.filter(request => request.title !== title);
+        const reqBooks = reqUser.books;
+        const swappedBook = await models.Book.findOne({ title })
+        reqBooks.push({ book: swappedBook })
+        const notifications = reqUser.notifications;
+        const newNotification = Notification.create({
+            username: reqUser.username,
+            notification: `Your request to swap has been approved. Please pick up your book per the instructions provided: ${updatedResUser.instructions}`
+        })
+        notifications.push(newNotification);
+        const updatedReqUser = await models.User.findOneAndUpdate(
+            { username: reqUsername },
+            {
+                outgoingRequests: updatedOutgoingRequests,
+                books: reqBooks,
+                notifications
+            },
+            { new: true }
+        );
+        return next();
     } catch (error) {
-      console.log('error in userController.approveRequest: ', error);
+        console.log('error in userController.approveRequest: ', error);
     }
-  }
-  
-  userController.rejectSwapRequest = async (req, res, next) => {
+}
+
+userController.rejectSwapRequest = async (req, res, next) => {
     const { title, reqUsername, resUsername } = req.body;
     try {
-      // remove incoming request from resUser
-      const incomingRequests = res.locals.user.incomingRequests;
-      const updatedIncomingRequests = incomingRequests.filter(request => request.title !== title);
-      const resUser = await models.User.findOneAndUpdate(
-        { username: res.locals.user.username },
-        { incomingRequests: updatedIncomingRequests },
-        { new: true }
-      );
-      res.locals.user = resUser;
-      // remove outgoing request from reqUser
-      let reqUser = await models.User.findOne({ username: reqUsername });
-      const outgoingRequests = reqUser.outgoingRequests;
-      const updatedOutgoingRequests = outgoingRequests.filter(request => request.title !== title);
-      reqUser = await models.User.findOneAndUpdate(
-        { username: reqUsername },
-        { outgoingRequests: updatedOutgoingRequests },
-        { new: true }
-      );
-      return next();
+        // remove incoming request from resUser
+        const incomingRequests = res.locals.user.incomingRequests;
+        const updatedIncomingRequests = incomingRequests.filter(request => request.title !== title);
+        const resUser = await models.User.findOneAndUpdate(
+            { username: res.locals.user.username },
+            { incomingRequests: updatedIncomingRequests },
+            { new: true }
+        );
+        res.locals.user = resUser;
+        // remove outgoing request from reqUser and send a notification
+        let reqUser = await models.User.findOne({ username: reqUsername });
+        const outgoingRequests = reqUser.outgoingRequests;
+        const updatedOutgoingRequests = outgoingRequests.filter(request => request.title !== title);
+        const notifications = reqUser.notifications;
+        const newNotification = Notification.create({
+            username: reqUser.username,
+            message: 'Sorry, your swap request has been declined. Try requesting another copy near you.'
+        });
+        notifications.push(newNotification);
+
+        reqUser = await models.User.findOneAndUpdate(
+            { username: reqUsername },
+            {
+                outgoingRequests: updatedOutgoingRequests,
+                notifications
+            },
+            { new: true }
+        );
+        return next();
     } catch (error) {
-      console.log('Error in userController.rejectSwapRequest: ', error);
+        console.log('Error in userController.rejectSwapRequest: ', error);
     }
-  }
-  
+}
+
 
 module.exports = userController;
