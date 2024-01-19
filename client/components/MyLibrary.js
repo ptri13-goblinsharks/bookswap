@@ -20,14 +20,18 @@ const MyLibrary = () => {
       setMyLibraryBooks(data);
 
     })
-  }, [])
+  }, [myLibraryBooks])
+
+  const updateState = (newState) => {
+    setMyLibraryBooks(newState)
+  }
 
 
   return (
     <div>
       <HomeNavBar />
       <MyBooks books={myLibraryBooks} />
-      <AddBook />
+      <AddBook books={myLibraryBooks} onUpdate={updateState} />
     </div>
   );
 };
