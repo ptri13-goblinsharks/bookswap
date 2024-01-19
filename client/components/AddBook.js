@@ -11,6 +11,7 @@
 
 import React from 'react'
 import { useState, useEffect } from 'react';
+import MyBooks from './MyBooks';
 
 
 const AddBook = () => {
@@ -22,12 +23,13 @@ const AddBook = () => {
     //checks global library first before making API call, for performance
 
     const handleBookSelect = (book) => {
-        fetch('/library/addBook', {
+        console.log(`book: ${book}`)
+        fetch('/library/action/findBook', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
               },
-            body: JSON.stringify(book),
+            body: JSON.stringify({title:book}),
         })
         .then(data => data.json())
         .then(data => {
@@ -36,12 +38,15 @@ const AddBook = () => {
         })
        
       };
+    // throw handler here for adding book
+    // POST to library/action/addBook
+
       
     return (
     <><div> <input
             className='add-search-bar'
             type='text'
-            placeholder='Add a book'
+            placeholder='Search a book title to add to your library'
             value={searchBook}
             onChange={(e) => setSearchBook(e.target.value)} /></div><div>
                 {selectedBook && (
@@ -49,6 +54,9 @@ const AddBook = () => {
                         <li>{selectedBook.title}</li>
                         <li>{selectedBook.author}</li>
                         <li>{selectedBook.genre}</li>
+                        <button onClick={() => handleBookSelect(searchBook)}>
+                  Add Book
+                </button>
                     </ul>
                 )}
             </div></>
