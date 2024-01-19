@@ -3,7 +3,7 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
 const MyBooks = ({ books }) => {
-  const [myBooks, setMyBooks] = useState([]);
+  // const [myBooks, setMyBooks] = useState([]);
 
   const responsive = {
     superLargeDesktop: {
@@ -49,18 +49,23 @@ const MyBooks = ({ books }) => {
     { title: 'The Alchemist', author: 'Paulo Coelho', genre: 'Philosophical' },
   ];
 
-  useEffect(() => {
-    setMyBooks(mockBooks);
-  }, [mockBooks]);
+  // useEffect(() => {
+  //   setMyBooks(mockBooks);
+  // }, [mockBooks]);
+
+  const retrievedBooks = books.map(item => item.book);
+  console.log('my retrieved books are', retrievedBooks);
 
   return (
     <div>
       <Carousel responsive={responsive}>
-        {myBooks.map((book, index) => (
+        {retrievedBooks.map((book, index) => (
+          book && 
           <div key={index}>
+            <img src={book.previewUrl} style={{height: '300px'}}></img>
             <li>{book.title}</li>
             <li>{book.author}</li>
-            <li>{book.genre}</li>
+            {/* <li>{book.genre}</li> */}
             {/* Add other book details as needed */}
           </div>
         ))}

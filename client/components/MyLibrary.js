@@ -23,7 +23,9 @@ const MyLibrary = () => {
     <div>
       <HomeNavBar />
       <AddBook />
-      <MyBooks books={myLibraryBooks} />
+      {/* <MyBooks books={myLibraryBooks} /> */}
+      {myLibraryBooks.length > 0 ? <MyBooks books={myLibraryBooks} /> : <div>No books yet.</div>}
+
     </div>
   );
 };
