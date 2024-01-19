@@ -16,7 +16,7 @@ apiController.checkApi = async (req, res, next) => {
             return next();
         }
     } catch (error) {
-        console.log ('Error in apiController fetch request')
+        console.log ('Error in apiController fetch request', error)
     }
 }
 
