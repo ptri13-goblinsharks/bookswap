@@ -5,7 +5,6 @@ import Requests from './Requests.jsx';
 
 const Notifications = () => {
     const [notifications, setNotifications] = useState([]);
-    const [notificationsCleared, setNotificationsCleared] = useState(false);
 
     useEffect(() => {
         fetch('/action/getNotifications')
@@ -15,7 +14,7 @@ const Notifications = () => {
                 setNotifications(data);
             })
             .catch(err => console.log('APP error in getting notifications: ', err));
-    }, [notificationsCleared]);
+    }, []);
 
     const readNote = (id) => {
         console.log('app readNote running')
@@ -27,10 +26,8 @@ const Notifications = () => {
 
     const clearNotifications = () => {
         fetch(`/action/clearNotifications`)
-        .then(res => res.json())
-        .then(data => {
-            setNotifications(data);
-            setNotificationsCleared(true);
+        .then(res => {
+            if (res.status === 200) setNotifications([])
         })
         .catch(err => console.log('App error in clearning notifications: ', err));
     }
@@ -51,7 +48,7 @@ const Notifications = () => {
         <div>
             <HomeNavBar />
             <div className="notifications-container">
-                <button className="transparent" onClick={clearNotifications}>Clear notifications</button>
+                <button className="transparent" onClick={clearNotifications}>Clear all</button>
                 {notificationElems.length > 0 ? notificationElems : <div>No notifications yet</div>}
             </div>
         </div>
