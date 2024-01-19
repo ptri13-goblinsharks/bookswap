@@ -58,7 +58,7 @@ const AddBook = ({onUpdate}) => {
       
     const addButtonOnClick = () => {
         handleAddBook(selectedBook);
-        onUpdate(selectedBook);
+        // onUpdate(selectedBook);
     }
 
     const buttonOnClick = () => {

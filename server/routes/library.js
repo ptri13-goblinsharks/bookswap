@@ -15,9 +15,9 @@ router.post(
 );
 
 router.post(
-  '/action/addBook/:username',
+  '/action/addBook/',
   libraryController.addToGlobalLibrary,
-  // sessionController.isLoggedIn,
+  sessionController.isLoggedIn,
   userController.addToUserLibrary,
   (req, res) => res.status(200).json(res.locals.user)
 );
