@@ -66,7 +66,7 @@ libraryController.deleteBook = async (req, res, next) => {
     );
     res.locals.user = updatedUser;
     // if that was the last copy in global library, delete from global library
-    if (res.locals.foundBooks.length === 1) {
+    if (res.locals.foundBooks.length <= 1) {
       const deletedBook = await models.Book.findOneAndDelete({ "book.title": title })
     }
     return next()    
@@ -104,8 +104,8 @@ libraryController.retrieveBook = async (req, res, next) => {
 
     const results = await models.User.aggregate([
       { $unwind: "$books" },
-      { $match: { books: title, isAvailable: true } },
-      { $project: { _id: 0, username: 1, address: 1, books: 1 } },
+      { $match: { "books.book.title": title } },
+      { $project: { _id: 0, username: 1, address: 1, "books.book": 1 } },
     ]);
     // save books and users in object in {user: user, book: book} format in res.locals.books
     res.locals.foundBooks = results;
