@@ -6,8 +6,9 @@ import Login from './Login.jsx';
 import MyLibrary from './MyLibrary';
 import HomeNavBar from './HomeNavBar';
 import ProtectedRoute from './ProtectedRoute.jsx';
-import Notifications from './notification/Notifications.jsx';
+import Notifications from './SwapComponents/Notifications.jsx';
 import Profile from './Profile.jsx';
+import Requests from './SwapComponents/Requests.jsx';
 
 
 function App() {
@@ -24,6 +25,11 @@ function App() {
         <Route path='/myLibrary' element={
           <ProtectedRoute>
             <MyLibrary />
+          </ProtectedRoute>
+        } />
+        <Route path='/requests' element={
+          <ProtectedRoute>
+            <Requests />
           </ProtectedRoute>
         } />
         <Route path='/notifications' element={

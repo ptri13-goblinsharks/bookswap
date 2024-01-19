@@ -11,6 +11,9 @@ function HomeNavBar() {
       <Link to='/myLibrary'>
         <h2>My Library</h2>
       </Link>
+      <Link to='/requests'>
+        <h2>Requests</h2>
+      </Link>
       <Link to='/notifications'>
         <h2>Notifications</h2>
       </Link>

@@ -44,7 +44,8 @@ const userSchema = new Schema({
   address: { type: String, required: false },
   // zipcode: { type: Number, required: false },
   books: [{
-    book: { type: Schema.Types.ObjectId, ref: 'book' },
+    // book: { type: Schema.Types.ObjectId, ref: 'book' },
+    book: {},
     isAvailable: { type: Boolean },
     isBorrowed: {
       borrowedFrom: String,

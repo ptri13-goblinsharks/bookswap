@@ -15,11 +15,11 @@ router.post(
 );
 
 router.post(
-  '/action/addBook',
+  '/action/addBook/',
   libraryController.addToGlobalLibrary,
   sessionController.isLoggedIn,
   userController.addToUserLibrary,
-  (req, res) => res.status(200).json(res.locals.userLibrary)
+  (req, res) => res.status(200).json(res.locals.user)
 );
 
 router.get(

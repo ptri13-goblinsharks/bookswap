@@ -23,16 +23,15 @@ apiController.checkApi = async (req, res, next) => {
     }
 }
 
-apiController.addToGlobalLibrary = async (req, res, next) => {
-    try {
-        const olWorkNumber = req.body;
-        const response = await fetch('https://openlibrary.org/works/' + olWorkNumber + '.json');
-        const data = await response.json();
+// apiController.addToGlobalLibrary = async (req, res, next) => {
+//     try {
+//         const olWorkNumber = req.body;
+//         const response = await fetch('https://openlibrary.org/works/' + olWorkNumber + '.json');
+//         const data = await response.json();
         
-    } catch (error) {
-        console.log('Error in addToGlobalLibrary middleware')
-    }
-}
+//     } catch (error) {
+//         console.log('Error in addToGlobalLibrary middleware', error)
+//     }
+// }
 
 module.exports = apiController;
-
