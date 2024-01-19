@@ -119,20 +119,26 @@ userController.addToUserLibrary = async (req, res, next) => {
     // currentBooks.push([{ book: bookId }, { isAvailable: true }]);
     currentBooks.push({ book });
     try {
-        const updatedUser = await User.findOneAndUpdate(
-            // { _id: userId },
-            { username: res.locals.user.username },
-            // { username },
-            { $set: { books: currentBooks } },
-            { new: true }
-        )
-        // const newBookLocation = updatedUser.books.length - 1;
-        // const populatedUser = await updatedUser.populate({
-        //     path: `books[${newBookLocation}]`
-        // })
-        // res.locals.user = populatedUser;
-        res.locals.user = updatedUser;
-        console.log('updatedUser is ', updatedUser);
+        if (user.books.findIndex(el => el.book.title === book.title
+            )) {
+                res.locals.user = user
+                return next();
+            } else {
+                const updatedUser = await User.findOneAndUpdate(
+                    // { _id: userId },
+                    { username: res.locals.user.username },
+                    // { username },
+                    { $set: { books: currentBooks } },
+                    { new: true }
+                    )
+                    // const newBookLocation = updatedUser.books.length - 1;
+                    // const populatedUser = await updatedUser.populate({
+                    //     path: `books[${newBookLocation}]`
+                    // })
+                    // res.locals.user = populatedUser;
+                    res.locals.user = updatedUser;
+                    console.log('updatedUser is ', updatedUser);
+            }
         return next();
     } catch (err) {
         console.log('Error in userController.addToUserLibrary: ', err);
