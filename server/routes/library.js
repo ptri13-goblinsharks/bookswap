@@ -19,7 +19,7 @@ router.post(
   libraryController.addToGlobalLibrary,
   sessionController.isLoggedIn,
   userController.addToUserLibrary,
-  (req, res) => res.status(200).json(res.locals.user)
+  (req, res) => res.status(200).json(res.locals.user.books)
 );
 
 router.get(
@@ -40,7 +40,9 @@ router.post(
   }
 );
 
-router.post('/action/sendSwapRequest', sessionController.isLoggedIn, userController.sendSwapRequest, (req, res) => {
+router.post('/action/sendSwapRequest', 
+// sessionController.isLoggedIn, 
+userController.sendSwapRequest, (req, res) => {
   res.status(200).json(res.locals.user);
 });
 

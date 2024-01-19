@@ -43,7 +43,8 @@ libraryController.addToGlobalLibrary = async (req, res, next) => {
     const { title, author, olId, previewUrl } = req.body;
     const checkBook = await models.Book.findOne({ olId });
     if (checkBook) {
-      res.locals.book = checkBook.book;
+      console.log('book already exists');
+      res.locals.book = checkBook;
     } else {
       const book = await models.Book.create({title, author, olId, previewUrl});
       res.locals.book = book;

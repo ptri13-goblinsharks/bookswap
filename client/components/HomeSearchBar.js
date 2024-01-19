@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import GoogleMap from './GoogleMap';
 
 function HomeSearchBar() {
-  
+
 
   const [books, setBooks] = useState([]);
   const [searchBook, setSearchBook] = useState('');
@@ -65,5 +65,9 @@ function HomeSearchBar() {
     </div>
   );
 }
+
+// Route to request a swap: post /library/action/sendSwapRequest 
+// Request body should include: { book, reqUsername and resUsername } 
+// The book should be an object i.e. include title, author, previewUrl 
 
 export default HomeSearchBar;
