@@ -185,10 +185,11 @@ userController.sendSwapRequest = async (req, res, next) => {
 
 userController.approveSwapRequest = async (req, res, next) => {
     const { book, reqUsername, resUsername } = req.body;
+    console.log('usercontroller approveswaprequest running')
     //update resUser with updated incoming requests and books
     const incomingRequests = res.locals.user.incomingRequests;
-    const updatedIncomingRequests = incomingRequests.filter(request => request.book.title !== title);
-    const updatedResBooks = res.locals.user.books.filter(el => el.book.title !== title);
+    const updatedIncomingRequests = incomingRequests.filter(request => request.book.title !== book.title);
+    const updatedResBooks = res.locals.user.books.filter(el => el && el.book && el.book.title !== book.title);
     try {
         const updatedResUser = await User.findOneAndUpdate(
             { username: res.locals.user.username },
@@ -199,16 +200,17 @@ userController.approveSwapRequest = async (req, res, next) => {
             { new: true }
         );
         res.locals.user = updatedResUser;
+        console.log('updated approver info is ', updatedResUser);
         // update reqUser with updated outgoing requests and books, and send a notification
         const reqUser = await User.findOne({ username: reqUsername });
-        const updatedOutgoingRequests = reqUser.outgoingRequests.filter(request => request.book.title !== title);
+        const updatedOutgoingRequests = reqUser.outgoingRequests.filter(request => request.book.title !== book.title);
         const reqBooks = reqUser.books;
         const swappedBook = await Book.findOne({ title: book.title })
         reqBooks.push({ book: swappedBook })
         const notifications = reqUser.notifications;
-        const newNotification = Notification.create({
+        const newNotification = await Notification.create({
             username: reqUser.username,
-            notification: `Your request to swap has been approved. Please pick up your book per the instructions provided: ${updatedResUser.instructions}`
+            message: `Your request to swap has been approved. Please pick up your book per the instructions provided: ${updatedResUser.instructions}`
         })
         notifications.push(newNotification);
         const updatedReqUser = await User.findOneAndUpdate(
@@ -220,6 +222,7 @@ userController.approveSwapRequest = async (req, res, next) => {
             },
             { new: true }
         );
+        console.log('updated requested info is ', updatedReqUser);
         return next();
     } catch (error) {
         console.log('error in userController.approveRequest: ', error);
@@ -244,7 +247,7 @@ userController.rejectSwapRequest = async (req, res, next) => {
         const outgoingRequests = reqUser.outgoingRequests;
         const updatedOutgoingRequests = outgoingRequests.filter(request => request.book.title !== book.title);
         const notifications = reqUser.notifications;
-        const newNotification = Notification.create({
+        const newNotification = await Notification.create({
             username: reqUser.username,
             message: 'Sorry, your swap request has been declined. Try requesting another copy near you.'
         });

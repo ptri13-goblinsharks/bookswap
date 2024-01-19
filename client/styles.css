@@ -45,12 +45,14 @@
   flex-direction: column;
   justify-content: flex-start;
 }
+
 .home-searchbar {
   height: 30px;
   border-radius: 5px;
   border: 1px solid gray;
   padding: 10px;
 }
+
 .bookswap-logo {
   width: 120px;
 }
@@ -74,6 +76,7 @@ input {
   margin-top: 10px;
   cursor: pointer;
 }
+
 button {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -108,7 +111,7 @@ a {
 }
 
 a:hover {
-  color:rgb(123, 87, 223);
+  color: rgb(123, 87, 223);
 }
 
 .form-container {

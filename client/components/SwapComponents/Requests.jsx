@@ -35,7 +35,7 @@ const Requests = () => {
             body: JSON.stringify({ book, reqUsername, resUsername })
         })
             .then(data => data.json())
-            .then(setUser(user))
+            .then(data => setUser(data))
             .catch(err => console.log('App error accepting swap request: ', err));
     }
 
@@ -48,7 +48,7 @@ const Requests = () => {
             body: JSON.stringify({ book, reqUsername, resUsername })
         })
             .then(data => data.json())
-            .then(setUser(user))
+            .then(data => setUser(data))
             .catch(err => console.log('App error accepting swap request: ', err));
     }
 
@@ -56,7 +56,7 @@ const Requests = () => {
         <div key={i} style={{ width: '300px' }}>
             <RequestCard
                 book={request.book}
-                reqUsername={request.resUsername}
+                reqUsername={request.reqUsername}
                 resUsername={request.resUsername}
             />
         </div>
@@ -66,7 +66,7 @@ const Requests = () => {
         <div key={i} style={{ width: '300px' }}>
             <RequestCard
                 book={request.book}
-                reqUsername={request.resUsername}
+                reqUsername={request.reqUsername}
                 resUsername={request.resUsername}
             />
             <button className="small" onClick={() => handleAccept(request.book, request.reqUsername, request.resUsername)}>Accept</button>

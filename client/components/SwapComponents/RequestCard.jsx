@@ -28,6 +28,8 @@ const RequestCard = (props) => {
         <div>
             <b>{props.book.title}</b>
             <div>Author: {props.book.author}</div>
+            <div>Requestor: {props.reqUsername} </div>
+            <div>Owner: {props.resUsername} </div>
             <div>
                 <img src={props.book.previewUrl} style={{height: '300px'}}></img>
             </div>
