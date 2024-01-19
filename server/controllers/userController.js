@@ -235,7 +235,7 @@ userController.rejectSwapRequest = async (req, res, next) => {
     try {
         // remove incoming request from resUser
         const incomingRequests = res.locals.user.incomingRequests;
-        const updatedIncomingRequests = incomingRequests.filter(request => request.book.title !== book.title);
+        const updatedIncomingRequests = incomingRequests.filter(request => request.book.title !== book.title || request.reqUsername !== reqUsername);
         const resUser = await User.findOneAndUpdate(
             { username: res.locals.user.username },
             { incomingRequests: updatedIncomingRequests },
@@ -268,6 +268,36 @@ userController.rejectSwapRequest = async (req, res, next) => {
     }
 }
 
+userController.withdrawRequest = async (req, res, next) => {
+    console.log('withdraw request running')
+    const { book, reqUsername, resUsername } = req.body;
+    try {
+        const outgoingRequests = res.locals.user.outgoingRequests.filter(
+            item => item.book.title !== book.title || item.resUsername !== resUsername
+        );
+        const newReqUser = await User.findOneAndUpdate(
+            { username: reqUsername },
+            { outgoingRequests },
+            { new: true }
+        );
+        res.locals.user = newReqUser;
+
+        const resUser = await User.findOne({ username: resUsername });
+        const incomingRequests = resUser.incomingRequests.filter(
+            item => item.book.title !== book.title || item.reqUsername !== reqUsername
+        );
+        const newResUser = await User.findOneAndUpdate(
+            { username: resUsername },
+            { incomingRequests },
+            { new: true }
+        );
+        return next()
+    } catch (err) {
+        console.log('error in userController withdraw request: ', err);
+        return next(err);
+    }
+}
+
 userController.markReadNotification = async (req, res, next) => {
     console.log('userController markReadnotification running')
     const { id } = req.params;
@@ -297,9 +327,9 @@ userController.markReadNotification = async (req, res, next) => {
 
 userController.clearNotifications = async (req, res, next) => {
     res.locals.user.notifications.forEach(async (notice) => {
-        await Notification.findOneAndDelete({id: notice._id})
+        await Notification.findOneAndDelete({ id: notice._id })
     });
-    
+
     const updatedUser = await User.findOneAndUpdate(
         { username: res.locals.user.username },
         { notifications: [] },
