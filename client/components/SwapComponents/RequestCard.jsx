@@ -27,7 +27,7 @@ const RequestCard = (props) => {
     return (
         <div>
             <b>{props.book.title}</b>
-            <div>Author: {props.book.author}</div>
+            <div>{props.book.author}</div>
             <div>Requestor: {props.reqUsername} </div>
             <div>Owner: {props.resUsername} </div>
             <div>
