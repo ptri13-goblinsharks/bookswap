@@ -14,19 +14,24 @@ const MyLibrary = () => {
 
   useEffect(() => {
     fetch('/action/getLibrary')
-      .then(data => data.json())
-      .then(data => {
-        console.log(data);
-        setMyLibraryBooks(data);
-      })
-  }, [])
+    .then(data => data.json())
+    .then (data => {
+
+      setMyLibraryBooks(data);
+
+    })
+  }, [myLibraryBooks])
+
+  const updateState = (newState) => {
+    setMyLibraryBooks(newState)
+  }
 
 
   return (
     <div>
       <HomeNavBar />
-      <AddBook />
       <MyBooks books={myLibraryBooks} />
+      <AddBook books={myLibraryBooks} onUpdate={updateState} />
     </div>
   );
 };

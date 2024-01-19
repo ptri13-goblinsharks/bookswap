@@ -81,7 +81,7 @@ libraryController.retrieveBook = async (req, res, next) => {
     // find all books
     
     const results = await models.User.aggregate([
-      { $unwind: '$books' },
+      { $unwind: "$books" },
       { $match: { books: title, isAvailable: true } },
       { $project: { _id: 0, username: 1, address: 1, books: 1 } },
     ]);
