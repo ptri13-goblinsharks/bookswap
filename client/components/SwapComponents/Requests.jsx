@@ -110,7 +110,7 @@ const Requests = () => {
                 resUsername={request.resUsername}
             /> */}
             <button className="small" onClick={() => handleAccept(request.book, request.reqUsername, request.resUsername)}>Accept</button>
-            <button className="small" onClick={() => handleDecline(request.book, request.reqUsername, request.resUsername)}>Decline</button>
+            <button className="transparent" onClick={() => handleDecline(request.book, request.reqUsername, request.resUsername)}>Decline</button>
         </div>
     ))
 
@@ -143,7 +143,7 @@ const Requests = () => {
     return (
         <div>
             <HomeNavBar />
-            <h1>Pending Requests by You</h1>
+            <h1>Pending requests by you</h1>
             <div className='request-container'>
                 {outgoingRequestElems.length > 0 ?
                     // <Carousel responsive={responsive}>
@@ -151,7 +151,7 @@ const Requests = () => {
                     // </Carousel>
                     : <div>No outgoing requests yet</div>}</div>
 
-            <h1>Incoming Requests for Your Books</h1>
+            <h1>Incoming requests for your books</h1>
             <div className='request-container'>
                 {incomingRequestElems.length > 0 ?
                     // <Carousel responsive={responsive}>
