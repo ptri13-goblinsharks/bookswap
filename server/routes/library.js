@@ -40,6 +40,10 @@ router.post(
   }
 );
 
+router.delete('/action/deleteBook', sessionController.isLoggedIn, libraryController.retrieveBook, libraryController.deleteBook, (req, res) => {
+  res.status(200).json(res.locals.user);
+})
+
 router.post('/action/sendSwapRequest', 
 // sessionController.isLoggedIn, 
 userController.sendSwapRequest, (req, res) => {

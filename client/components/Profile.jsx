@@ -18,6 +18,7 @@ const Profile = () => {
             .then(res => res.json())
             .then((key) => {
                 const script = document.createElement('script');
+                script.id = 'google';
                 script.src = `https://maps.googleapis.com/maps/api/js?key=${key}&libraries=places`;
                 script.async = true;
                 script.onload = () => setIsGoogleMapsLoaded(true);
@@ -32,6 +33,10 @@ const Profile = () => {
             })
             .catch(err => console.log('App error getting user: ', err))
 
+        return () => {
+            const removedScript = document.getElementById('google');
+            if (removedScript) document.head.removeChild(removedScript);
+        }
     }, []);
 
     useEffect(() => {
@@ -52,6 +57,7 @@ const Profile = () => {
                 })
             }
         }
+
         if (isGoogleMapsLoaded) GooglePlacesSetUp();
     }, [isGoogleMapsLoaded, userData]);
 
