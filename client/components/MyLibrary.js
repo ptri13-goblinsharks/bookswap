@@ -7,31 +7,23 @@ import MyBooks from './MyBooks';
 import { useSelector } from 'react-redux';
 
 const MyLibrary = () => {
-
   // pull library data from DB here and pass to search bar as props.
 
   const [myLibraryBooks, setMyLibraryBooks] = useState([]);
 
   useEffect(() => {
     fetch('/action/getLibrary')
-    .then(data => data.json())
-    .then (data => {
-
-      setMyLibraryBooks(data);
-
-    })
-  }, [myLibraryBooks])
-
-  const updateState = (newState) => {
-    setMyLibraryBooks(newState)
-  }
-
+      .then((data) => data.json())
+      .then((data) => {
+        setMyLibraryBooks(data);
+      });
+  }, []);
 
   return (
     <div>
       <HomeNavBar />
+      <AddBook />
       <MyBooks books={myLibraryBooks} />
-      <AddBook books={myLibraryBooks} onUpdate={updateState} />
     </div>
   );
 };
