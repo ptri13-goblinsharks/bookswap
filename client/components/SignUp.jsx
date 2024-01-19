@@ -21,11 +21,17 @@ const SignUp = () => {
             .then(res => res.json())
             .then((key) => {
                 const script = document.createElement('script');
+                script.id = 'google'
                 script.src = `https://maps.googleapis.com/maps/api/js?key=${key}&libraries=places`;
                 script.async = true;
                 document.head.appendChild(script);
             })
             .catch(err => console.log('App: Error retrieving maps key ', err))
+
+        return () => {
+            const removedScript = document.getElementById('google');
+            if (removedScript) document.head.removeChild(removedScript);
+        }
     }, []);
 
 
@@ -125,12 +131,12 @@ const SignUp = () => {
                     onChange={handleUserDataChange} /></div> */}
 
                 <div>Pick up instructions (Optional)</div>
-                <div><input 
-                name="instructions"
-                type="text"
-                placeholder="e.g. pick up from doorman, or contact me at email / phone"
-                value={userData.instructions}
-                onChange={handleUserDataChange}
+                <div><input
+                    name="instructions"
+                    type="text"
+                    placeholder="e.g. pick up from doorman, or contact me at email / phone"
+                    value={userData.instructions}
+                    onChange={handleUserDataChange}
                 /></div>
 
                 <div>Username</div>
