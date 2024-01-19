@@ -52,7 +52,7 @@ const Requests = () => {
     }
 
     const outgoingRequestElems = user.outgoingRequests.map((request, i) => (
-        <div key={i} style = {{width: '250px'}}>
+        <div key={i} style = {{width: '300px'}}>
             <RequestCard
                 title={request.title}
                 reqUsername={request.resUsername}
@@ -62,7 +62,7 @@ const Requests = () => {
     ))
 
     const incomingRequestElems = user.incomingRequests.map((request, i) => (
-        <div key={i} style = {{width: '250px'}}>
+        <div key={i} style = {{width: '300px'}}>
             <RequestCard
                 title={request.title}
                 reqUsername={request.resUsername}
