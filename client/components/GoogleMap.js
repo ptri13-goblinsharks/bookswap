@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import {
   APIProvider,
@@ -53,7 +52,7 @@ function GoogleMap({ selectedBook }) {
             >
               <p>{selectedBook.title}</p>
               <p>{selectedBook.fullAddress}</p>
-              <button>Request book</button>
+              <button className='request-book-button'>Request book</button>
             </InfoWindow>
           )}
         </Map>

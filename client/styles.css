@@ -29,7 +29,7 @@
 }
 
 .home-navbar a:hover {
-  color: rgb(116, 115, 115)
+  color: rgb(116, 115, 115);
 }
 
 .home-container {
@@ -59,7 +59,7 @@
 
 body {
   font-family: Arial;
-  color: rgb(66, 65, 65)
+  color: rgb(66, 65, 65);
 }
 
 input {
@@ -113,6 +113,9 @@ button.transparent {
 button.transparent:hover {
   color: rgb(123, 87, 223);
   border: 1px solid rgb(123, 87, 223);
+}
+.request-book-button {
+  width: 150px;
 }
 
 a {
@@ -182,4 +185,8 @@ h1 {
   border-radius: 8px;
   width: 685px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+ul {
+  list-style: none;
 }
