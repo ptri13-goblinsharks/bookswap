@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import RequestCard from './RequestCard.jsx';
 import HomeNavBar from '../HomeNavBar.js';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+
 
 const Requests = () => {
 
@@ -80,11 +83,18 @@ const Requests = () => {
 
     const incomingRequestElems = user.incomingRequests.map((request, i) => (
         <div key={i} style={{ width: '300px' }}>
-            <RequestCard
+            <div>
+                <b>{request.book.title}</b>
+                <div>Author: {request.book.author}</div>
+                <div>Requestor: {request.reqUsername} </div>
+                <div>Owner: {request.resUsername} </div>
+                <div><img src={request.book.previewUrl} style={{ height: '300px' }}></img></div>
+            </div>
+            {/* <RequestCard
                 book={request.book}
                 reqUsername={request.reqUsername}
                 resUsername={request.resUsername}
-            />
+            /> */}
             <button className="small" onClick={() => handleAccept(request.book, request.reqUsername, request.resUsername)}>Accept</button>
             <button className="small" onClick={() => handleDecline(request.book, request.reqUsername, request.resUsername)}>Decline</button>
         </div>
@@ -97,15 +107,44 @@ const Requests = () => {
             return <div class="warning" style={{ color: "#A41409", fontSize: "0.8em" }}>Error: You have not succesfully {approved} the request.</div>
         };
     }
+    const responsive = {
+        superLargeDesktop: {
+            breakpoint: { max: 4000, min: 1024 },
+            items: 5,
+        },
+        desktop: {
+            breakpoint: { max: 1024, min: 800 },
+            items: 4,
+        },
+        tablet: {
+            breakpoint: { max: 800, min: 464 },
+            items: 2,
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 1,
+        },
+    };
 
     return (
         <div>
             <HomeNavBar />
-            <h4>Pending Requests by You</h4>
-            <div className='request-container'>{outgoingRequestElems}</div>
+            <h1>Pending Requests by You</h1>
+            <div className='request-container'>
+                {outgoingRequestElems.length > 0 ?
+                    // <Carousel responsive={responsive}>
+                        outgoingRequestElems
+                    // </Carousel>
+                    : <div>No outgoing requests yet</div>}</div>
 
-            <h4>Incoming Requests for Your Books</h4>
-            <div className='request-container'>{incomingRequestElems}</div>
+            <h1>Incoming Requests for Your Books</h1>
+            <div className='request-container'>
+                {incomingRequestElems.length > 0 ?
+                    // <Carousel responsive={responsive}>
+                        incomingRequestElems
+                    // </Carousel>
+                    : <div>No incoming requests yet</div>
+                }</div>
             {warning()}
         </div>
     )

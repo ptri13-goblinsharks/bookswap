@@ -136,8 +136,16 @@ h2 {
   font-size: 12pt;
 }
 
+h1 {
+  font-size: 18pt;
+}
+
 .notifications-container {
   padding: 20px;
+}
+
+.notification {
+  margin-bottom: 10px;
 }
 
 .request-container {

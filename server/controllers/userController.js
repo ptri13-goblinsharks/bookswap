@@ -165,7 +165,7 @@ userController.sendSwapRequest = async (req, res, next) => {
         const notifications = resUser.notifications;
         const newNotification = await Notification.create({
             username: resUsername,
-            message: 'You have received a new swap request',
+            message: `You have received a new swap request for ${book.title}. Go to your Requests page to see more details.`,
             read: false
         });
         notifications.push(newNotification);
@@ -210,7 +210,7 @@ userController.approveSwapRequest = async (req, res, next) => {
         const notifications = reqUser.notifications;
         const newNotification = await Notification.create({
             username: reqUser.username,
-            message: `Your request to swap has been approved. Please pick up your book per the instructions provided: ${updatedResUser.instructions}`
+            message: `Your request to swap ${book.title} with ${resUsername} has been approved. Please pick up your book from ${updatedResUser.address} per the instructions provided: \n ${updatedResUser.instructions}`
         })
         notifications.push(newNotification);
         const updatedReqUser = await User.findOneAndUpdate(
@@ -249,7 +249,7 @@ userController.rejectSwapRequest = async (req, res, next) => {
         const notifications = reqUser.notifications;
         const newNotification = await Notification.create({
             username: reqUser.username,
-            message: 'Sorry, your swap request has been declined. Try requesting another copy near you.'
+            message: `Sorry, your swap request for ${book.title} from ${resUsername} has been declined. Try requesting another copy near you.`
         });
         notifications.push(newNotification);
 
@@ -269,6 +269,7 @@ userController.rejectSwapRequest = async (req, res, next) => {
 }
 
 userController.markReadNotification = async (req, res, next) => {
+    console.log('userController markReadnotification running')
     const { id } = req.params;
     try {
         const notice = await Notification.findOneAndUpdate(
@@ -276,8 +277,11 @@ userController.markReadNotification = async (req, res, next) => {
             { read: true },
             { new: true }
         );
-        const notifications = res.locals.user.notifications;
-        notifications.push(notice);
+        const notifications = res.locals.user.notifications.map(item => 
+            item && item._id && item._id.toString() === id ? notice : item
+        );
+
+        // const notifications = [];
         const updatedUser = await User.findOneAndUpdate(
             { username: res.locals.user.username },
             { notifications },

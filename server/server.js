@@ -90,7 +90,7 @@ app.get('/action/getNotifications', sessionController.isLoggedIn, (req, res) => 
   res.status(200).json(res.locals.user.notifications);
 })
 
-app.post('/action/markAsRead/:id', sessionController.isLoggedIn, userController.markReadNotification, (req, res) => {
+app.get('/action/markAsRead/:id', sessionController.isLoggedIn, userController.markReadNotification, (req, res) => {
   res.status(200).json(res.locals.user.notifications);
 })
 

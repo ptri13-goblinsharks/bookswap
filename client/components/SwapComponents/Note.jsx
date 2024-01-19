@@ -13,17 +13,21 @@ const Note = (props) => {
 
     const textStyle = {
         color: props.read ? 'grey' : 'black',
-        fontWeight: props.read ? 'normal' : 'bold'
+        fontWeight: props.read ? 'normal' : 'bold',
+        marginBottom: "20px",
+        padding: "15px",
+        border: "1px solid lightgrey"
     };
 
     return (
-        <div onClick={() => props.readNote(props.id)}>
-            <div style={textStyle}>
-                Created at: {new Date(props.createdAt).toLocaleString('en-US', dateTimeOptions)} ET.
+        <div onClick={props.readNote} style={textStyle}>
+            <div>
+                At: {new Date(props.createdAt).toLocaleString('en-US', dateTimeOptions)} ET.
             </div>
             <div>
                 {props.message}
             </div>
+            {/* <div>{props.id}</div> */}
         </div>
     )
 }

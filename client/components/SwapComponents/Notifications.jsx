@@ -17,6 +17,7 @@ const Notifications = () => {
     }, []);
 
     const readNote = (id) => {
+        console.log('app readNote running')
         fetch(`/action/markAsRead/${id}`)
             .then(res => res.json())
             .then(data => setNotifications(data))
@@ -30,7 +31,7 @@ const Notifications = () => {
                     createdAt={notice.createdAt}
                     message={notice.message}
                     read={notice.read}
-                    readNote={readNote}
+                    readNote={() => readNote(notice._id)}
                 />
             </div>
         ))
