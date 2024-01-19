@@ -7,6 +7,7 @@ function HomeSearchBar() {
   const [books, setBooks] = useState([]);
   const [searchBook, setSearchBook] = useState('');
   const [selectedBook, setSelectedBook] = useState(null);
+  const [foundBooks, setFoundBooks] = useState([])
 
   useEffect(() => {
     fetch('/library/action/globalLibrary')
@@ -24,6 +25,19 @@ function HomeSearchBar() {
   const handleBookSelect = (book) => {
     setSelectedBook(book);
     setSearchBook('');
+    fetch('/library/action/retrieveBook', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ title: book.title })
+    })
+      .then(data => data.json())
+      .then(data => {
+        console.log('found books are: ', data);
+        setFoundBooks(data)
+      })
+      .catch(err => console.log('App error retrieving book: ', err))
   };
 
   return (
@@ -42,8 +56,7 @@ function HomeSearchBar() {
               <ul key={index}>
                 <li>{book.title}</li>
                 <li>{book.author}</li>
-                <li>{book.genre}</li>
-                <li>{book.fullAddress}</li>
+                {/* <li>{book.address}</li> */}
                 <button onClick={() => handleBookSelect(book)}>
                   Show on map
                 </button>
@@ -55,13 +68,13 @@ function HomeSearchBar() {
             <ul>
               <li>{selectedBook.title}</li>
               <li>{selectedBook.author}</li>
-              <li>{selectedBook.genre}</li>
-              <li>{selectedBook.fullAddress}</li>
+              {/* <li>{selectedBook.address}</li> */}
             </ul>
           )}
         </div>
       </div>
-      <GoogleMap selectedBook={selectedBook} className='google-map' />
+      {foundBooks.length > 0 && (<GoogleMap books={foundBooks} className='google-map' />)}
+      {/* <GoogleMap selectedBook={foundBooks} className='google-map' /> */}
     </div>
   );
 }
