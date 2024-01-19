@@ -2,26 +2,7 @@ import React, { useEffect, useState } from 'react';
 import GoogleMap from './GoogleMap';
 
 function HomeSearchBar() {
-  const mockBooks = [
-    {
-      title: 'To Kill a Mockingbird',
-      author: 'Harper Lee',
-      genre: 'Fiction',
-      fullAddress: '123 Main St, Los Angeles, CA 90001',
-    },
-    {
-      title: '1984',
-      author: 'George Orwell',
-      genre: 'Dystopian',
-      fullAddress: '456 Oak St, Santa Monica, CA 90401',
-    },
-    {
-      title: 'The Great Gatsby',
-      author: 'F. Scott Fitzgerald',
-      genre: 'Classic',
-      fullAddress: '789 Maple Ave, Pasadena, CA 91101',
-    },
-  ];
+  
 
   const [books, setBooks] = useState([]);
   const [searchBook, setSearchBook] = useState('');
@@ -31,7 +12,7 @@ function HomeSearchBar() {
     fetch('/library/action/globalLibrary')
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setBooks(data);
       });
   }, []);

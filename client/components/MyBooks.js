@@ -10,18 +10,27 @@
  */
 
 
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 
-const MyBooks = props => {
+const MyBooks = ({books}) => {
 
-    const myBooks = props.books.map(element => {
-        element.previewUrl;
-    })
+  const [myBooks, setMyBooks] = useState([]);
+    // const myBooks = props.books.map(element => {
+    //     element.previewUrl;
+    // })
+    useEffect(() => {
+setMyBooks(books);
+    },[books])
 
   return (
     <div>
-        <ul className='myBooks'>{myBooks}</ul>
-    </div>
+        {myBooks.map((book, index) => (
+            <ul key={index}>
+              <li>{book.title}</li>
+              <li>{book._id}</li>
+            </ul>
+            ))}
+      </div>
   )
 }
 
