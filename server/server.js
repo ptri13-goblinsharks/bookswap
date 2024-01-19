@@ -94,6 +94,10 @@ app.get('/action/markAsRead/:id', sessionController.isLoggedIn, userController.m
   res.status(200).json(res.locals.user.notifications);
 })
 
+app.get('/action/clearNotifications', sessionController.isLoggedIn, userController.clearNotifications, (req, res) => {
+  res.status(200).json(res.locals.user.notifications);
+})
+
 //Verify active session for client side requests to protected pages
 app.get('/action/auth', sessionController.isLoggedIn, (req, res) => {
   res.status(200).json(true);

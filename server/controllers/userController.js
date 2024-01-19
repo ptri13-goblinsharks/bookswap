@@ -110,7 +110,7 @@ userController.updateUserProfile = async (req, res, next) => {
 userController.addToUserLibrary = async (req, res, next) => {
     const userId = res.locals.user._id;
     // const { username } = req.params;
-    const user = await User.findOne({username: res.locals.user.username})
+    const user = await User.findOne({ username: res.locals.user.username })
     // const user = await User.findOne({ username });
     const book = res.locals.book;
     // const bookId = res.locals.book._id;
@@ -277,7 +277,7 @@ userController.markReadNotification = async (req, res, next) => {
             { read: true },
             { new: true }
         );
-        const notifications = res.locals.user.notifications.map(item => 
+        const notifications = res.locals.user.notifications.map(item =>
             item && item._id && item._id.toString() === id ? notice : item
         );
 
@@ -295,5 +295,17 @@ userController.markReadNotification = async (req, res, next) => {
     }
 }
 
+userController.clearNotifications = async (req, res, next) => {
+    res.locals.user.notifications.forEach(async (notice) => {
+        await Notification.findOneAndDelete({id: notice._id})
+    });
+    
+    const updatedUser = await User.findOneAndUpdate(
+        { username: res.locals.user.username },
+        { notifications: [] },
+        { new: true }
+    );
+    res.locals.user = updatedUser;
+}
 
 module.exports = userController;

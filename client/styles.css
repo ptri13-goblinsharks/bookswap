@@ -104,6 +104,17 @@ button.small {
   margin-right: 20px;
 }
 
+button.transparent {
+  background-color: white;
+  color: rgb(183, 170, 216);
+  border: 1px solid rgb(183, 170, 216);
+}
+
+button.transparent:hover {
+  color: rgb(123, 87, 223);
+  border: 1px solid rgb(123, 87, 223);
+}
+
 a {
   font-weight: bold;
   text-decoration: none;

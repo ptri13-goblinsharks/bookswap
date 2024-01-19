@@ -70,7 +70,7 @@ const MyBooks = ({ books }) => {
           </div>
         ))}
       </Carousel>
-      ;
+      
     </div>
   );
 };

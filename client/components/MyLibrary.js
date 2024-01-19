@@ -23,7 +23,10 @@ const MyLibrary = () => {
     <div>
       <HomeNavBar />
       {/* <MyBooks books={myLibraryBooks} /> */}
+      <h1>You currently have {myLibraryBooks.length} books.</h1>
       {myLibraryBooks.length > 0 ? <MyBooks books={myLibraryBooks} /> : <div>No books yet.</div>}
+      
+      <h1>Add more books</h1>
       <AddBook updateBooks={(data) => setMyLibraryBooks(data)}/>
 
     </div>

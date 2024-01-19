@@ -5,6 +5,7 @@ import Requests from './Requests.jsx';
 
 const Notifications = () => {
     const [notifications, setNotifications] = useState([]);
+    const [notificationsCleared, setNotificationsCleared] = useState(false);
 
     useEffect(() => {
         fetch('/action/getNotifications')
@@ -14,7 +15,7 @@ const Notifications = () => {
                 setNotifications(data);
             })
             .catch(err => console.log('APP error in getting notifications: ', err));
-    }, []);
+    }, [notificationsCleared]);
 
     const readNote = (id) => {
         console.log('app readNote running')
@@ -24,22 +25,33 @@ const Notifications = () => {
             .catch(err => console.log('App error marking as read: ', err));
     }
 
-        const notificationElems = notifications.slice().reverse().map((notice, i) => (
-            <div key={notice._id}>
-                <Note
-                    id={notice._id}
-                    createdAt={notice.createdAt}
-                    message={notice.message}
-                    read={notice.read}
-                    readNote={() => readNote(notice._id)}
-                />
-            </div>
-        ))
+    const clearNotifications = () => {
+        fetch(`/action/clearNotifications`)
+        .then(res => res.json())
+        .then(data => {
+            setNotifications(data);
+            setNotificationsCleared(true);
+        })
+        .catch(err => console.log('App error in clearning notifications: ', err));
+    }
+
+    const notificationElems = notifications.slice().reverse().map((notice, i) => (
+        <div key={notice._id}>
+            <Note
+                id={notice._id}
+                createdAt={notice.createdAt}
+                message={notice.message}
+                read={notice.read}
+                readNote={() => readNote(notice._id)}
+            />
+        </div>
+    ))
 
     return (
         <div>
             <HomeNavBar />
             <div className="notifications-container">
+                <button className="transparent" onClick={clearNotifications}>Clear notifications</button>
                 {notificationElems.length > 0 ? notificationElems : <div>No notifications yet</div>}
             </div>
         </div>
