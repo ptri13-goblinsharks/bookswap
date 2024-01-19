@@ -72,17 +72,26 @@ app.get('/myLibrary', sessionController.isLoggedIn, (req, res) => {
   res.status(200).json(res.locals.user);
 });
 
+app.get('/action/getUser', sessionController.isLoggedIn, (req, res) => {
+  res.status(200).json(res.locals.user);
+})
+
+app.post('/action/updateUser', sessionController.isLoggedIn, userController.updateUserProfile, (req, res) => {
+  res.status(200).json(res.locals.user);
+})
+
 app.get('/action/getLibrary', sessionController.isLoggedIn, (req, res) => {
   console.log('get library running');
   res.status(200).json(res.locals.user.books);
 });
 
 app.get('/action/getNotifications', sessionController.isLoggedIn, (req, res) => {
+  console.log('get notifications running');
   res.status(200).json(res.locals.user.notifications);
 })
 
-app.post('/action/markReadNotification', sessionController.isLoggedIn, userController.markReadNotification, (req, res) => {
-  res.status(200).json(res.locals.notification);
+app.post('/action/markAsRead/:id', sessionController.isLoggedIn, userController.markReadNotification, (req, res) => {
+  res.status(200).json(res.locals.user.notifications);
 })
 
 //Verify active session for client side requests to protected pages
