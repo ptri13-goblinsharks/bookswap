@@ -20,7 +20,7 @@ const bookSchema = new Schema({
   olId: { type: String, required: true },
   previewUrl: String,
   author: String,
-  genre: String,
+  genre: [String],
 });
 
 const Book = mongoose.model('book', bookSchema);

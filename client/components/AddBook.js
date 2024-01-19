@@ -15,7 +15,7 @@ import MyBooks from './MyBooks';
 import Modal from './modal';
 
 
-const AddBook = () => {
+const AddBook = ({onUpdate}) => {
     const [books, setBooks] = useState([]);
     const [searchBook, setSearchBook] = useState('');
     const [selectedBook, setSelectedBook] = useState('null');
@@ -46,16 +46,20 @@ const AddBook = () => {
     // throw handler here for adding book
     // POST to library/action/addBook
 
-    //   const handleAddBook = (book) => {
-    //     fetch('/library/action/addBook', {
-    //         method: 'POST',
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //           },
-    //         body: JSON.stringify({title: book.title, author:book.author, olId: book.olId, previewURL: book.previewUrl}),
-    //     })
-    //     }
+      const handleAddBook = (book) => {
+        fetch('/library/action/addBook', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+              },
+            body: JSON.stringify(book),
+        })
+        }
       
+    const addButtonOnClick = () => {
+        handleAddBook(selectedBook);
+        onUpdate(selectedBook);
+    }
 
     const buttonOnClick = () => {
         openModal();
@@ -78,7 +82,7 @@ const AddBook = () => {
                         <img src = {selectedBook.previewUrl} className = "resized-image"></img>
                         <p>Title: {selectedBook.title}</p>
                         <p>Author: {selectedBook.author}</p>
-                        <button>
+                        <button onClick={addButtonOnClick}>
                   Add Book
                 </button>
                     </ul>
