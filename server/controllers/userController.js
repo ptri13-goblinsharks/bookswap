@@ -109,18 +109,21 @@ userController.updateUserProfile = async (req, res, next) => {
 
 userController.addToUserLibrary = async (req, res, next) => {
     // const userId = res.locals.user._id;
-    // const {username } = req.params;
-    const user = await User.findOne({username: res.locals.user.username})
+    const { username } = req.params;
+    // const user = await User.findOne({username: res.locals.user.username})
+    const user = await User.findOne({ username });
     const book = res.locals.book;
+    console.log(book);
     // const bookId = res.locals.book._id;
     // const currentBooks = res.locals.user.books;
     const currentBooks = user.books;
     // currentBooks.push([{ book: bookId }, { isAvailable: true }]);
-    currentBooks.push({book});
+    currentBooks.push({ book });
     try {
         const updatedUser = await User.findOneAndUpdate(
             // { _id: userId },
-            { username: res.locals.user.username },
+            // { username: res.locals.user.username },
+            { username },
             { $set: { books: currentBooks } },
             { new: true }
         )
@@ -138,20 +141,26 @@ userController.addToUserLibrary = async (req, res, next) => {
 
 userController.sendSwapRequest = async (req, res, next) => {
     const { book, reqUsername, resUsername } = req.body;
-    const outgoingRequests = res.locals.user.outgoingRequests;
+    const user = await User.find({ username: reqUsername });
+    // const outgoingRequests = res.locals.user.outgoingRequests;
+    let outgoingRequests = user.outgoingRequests;
+    if (!outgoingRequests) outgoingRequests = [];
     outgoingRequests.push({ book, reqUsername, resUsername });
     try {
         // update the current user's outgoing requests
-        const updatedReqUser = await models.User.findOneAndUpdate(
-            { username: res.locals.user.username },
+        const updatedReqUser = await User.findOneAndUpdate(
+            // { username: res.locals.user.username },
+            { username: reqUsername },
             { outgoingRequests },
             { new: true }
         );
         res.locals.user = updatedReqUser;
+        console.log('updated user is ', res.locals.user)
 
         // update the other users's incoming requests and send a notification
-        const resUser = await models.User.findOne({ username: resUsername });
-        const incomingRequests = resUser.incomingRequests;
+        const resUser = await User.findOne({ username: resUsername });
+        let incomingRequests = resUser.incomingRequests;
+        if (!incomingRequests) incomingRequests = [];
         incomingRequests.push({ book, reqUsername, resUsername })
         const notifications = resUser.notifications;
         const newNotification = await Notification.create({
@@ -160,7 +169,7 @@ userController.sendSwapRequest = async (req, res, next) => {
             read: false
         });
         notifications.push(newNotification);
-        const updatedResUser = await models.User.findOneAndUpdate(
+        const updatedResUser = await User.findOneAndUpdate(
             { username: resUsername },
             {
                 incomingRequests,
@@ -170,7 +179,7 @@ userController.sendSwapRequest = async (req, res, next) => {
         );
         return next();
     } catch (error) {
-        console.log('error in userController.sendSwapRequests: ', err);
+        console.log('error in userController.sendSwapRequests: ', error);
     }
 }
 

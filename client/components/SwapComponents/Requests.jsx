@@ -5,26 +5,26 @@ import HomeNavBar from '../HomeNavBar.js';
 const Requests = () => {
 
     const [user, setUser] = useState({
-        username: 'trang',
+        username: '',
         outgoingRequests: [
-            { book: { title: 'Tom Sawyer', author: 'TBD' }, reqUsername: 'trang', resUsername: 'ross/russ' },
+            // { book: { title: 'Tom Sawyer', author: 'TBD' }, reqUsername: 'trang', resUsername: 'ross/russ' },
             // { title: 'Great Gatsby', reqUsername: 'trang', resUsername: 'ross/russ' },
             // { title: 'Siddhartha', reqUsername: 'trang', resUsername: 'ross/russ' }
         ],
         incomingRequests: [
-            { book: { title: 'Harry Potter', author: 'TBD' }, reqUsername: 'ross/russ', resUsername: 'trang' },
+            // { book: { title: 'Harry Potter', author: 'TBD' }, reqUsername: 'ross/russ', resUsername: 'trang' },
             // { title: 'Great Expectations', reqUsername: 'ross/russ', resUsername: 'trang' },
             // { title: 'Mary Poppins', reqUsername: 'ross/russ', resUsername: 'trang' }
 
         ]
     });
 
-    // useEffect(() => {
-    //     fetch('/action/getUser')
-    //     .then(data => data.json())
-    //     .then(data => setUser(data))
-    //     .catch(err => console.log('App error in getting user: ', user));    
-    // }, []);
+    useEffect(() => {
+        fetch('/action/getUser')
+        .then(data => data.json())
+        .then(data => setUser(data))
+        .catch(err => console.log('App error in getting user: ', user));    
+    }, []);
 
     const handleAccept = (book, reqUsername, resUsername) => {
         fetch('/library/action/approveSwapRequest', {
