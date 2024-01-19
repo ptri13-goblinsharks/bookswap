@@ -119,24 +119,29 @@ userController.addToUserLibrary = async (req, res, next) => {
     // currentBooks.push([{ book: bookId }, { isAvailable: true }]);
     currentBooks.push({ book });
     try {
-        if (user.books.find(el => el.book.title !== book.title)) {
-
-            const updatedUser = await User.findOneAndUpdate(
-                // { _id: userId },
-                { username: res.locals.user.username },
-                // { username },
-                { $set: { books: currentBooks } },
-                { new: true }
-                )
-                // const newBookLocation = updatedUser.books.length - 1;
-                // const populatedUser = await updatedUser.populate({
-                //     path: `books[${newBookLocation}]`
-                // })
-                // res.locals.user = populatedUser;
-                res.locals.user = updatedUser;
-                console.log('updatedUser is ', updatedUser);
+        console.log('Books => ', user.books)
+        console.log('Testing => ', user.books.findIndex(el => el.book.title === book.title)
+        )
+        if (user.books.findIndex(el => el.book.title === book.title
+            )) {
+                console.log()
+                res.locals.user = user
+                return next();
             } else {
-                res.locals.user = user;
+                const updatedUser = await User.findOneAndUpdate(
+                    // { _id: userId },
+                    { username: res.locals.user.username },
+                    // { username },
+                    { $set: { books: currentBooks } },
+                    { new: true }
+                    )
+                    // const newBookLocation = updatedUser.books.length - 1;
+                    // const populatedUser = await updatedUser.populate({
+                    //     path: `books[${newBookLocation}]`
+                    // })
+                    // res.locals.user = populatedUser;
+                    res.locals.user = updatedUser;
+                    console.log('updatedUser is ', updatedUser);
             }
         return next();
     } catch (err) {
