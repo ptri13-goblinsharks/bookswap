@@ -18,12 +18,14 @@ const Requests = () => {
 
         ]
     });
+    const [success, setSuccess] = useState(undefined);
+    const [approved, setApproved] = useState('');
 
     useEffect(() => {
         fetch('/action/getUser')
-        .then(data => data.json())
-        .then(data => setUser(data))
-        .catch(err => console.log('App error in getting user: ', user));    
+            .then(data => data.json())
+            .then(data => setUser(data))
+            .catch(err => console.log('App error in getting user: ', user));
     }, []);
 
     const handleAccept = (book, reqUsername, resUsername) => {
@@ -34,8 +36,15 @@ const Requests = () => {
             },
             body: JSON.stringify({ book, reqUsername, resUsername })
         })
-            .then(data => data.json())
-            .then(data => setUser(data))
+            .then(data => {
+                if (data.status !== 200) setSuccess(false);
+                return data.json();
+            })
+            .then(data => {
+                setUser(data);
+                setSuccess(true);
+                setApproved('approved');
+            })
             .catch(err => console.log('App error accepting swap request: ', err));
     }
 
@@ -47,8 +56,15 @@ const Requests = () => {
             },
             body: JSON.stringify({ book, reqUsername, resUsername })
         })
-            .then(data => data.json())
-            .then(data => setUser(data))
+            .then(data => {
+                if (data.status !== 200) setSuccess(false);
+                return data.json()
+            })
+            .then(data => {
+                setUser(data);
+                setSuccess(true);
+                setApproved('declined')
+            })
             .catch(err => console.log('App error accepting swap request: ', err));
     }
 
@@ -74,6 +90,14 @@ const Requests = () => {
         </div>
     ))
 
+    const warning = () => {
+        if (success) {
+            return <div class="warning" style={{ color: "#85BAA1", fontSize: "0.8em" }}>You have successfully {approved} the request </div>;
+        } else if (success === false) {
+            return <div class="warning" style={{ color: "#A41409", fontSize: "0.8em" }}>Error: You have not succesfully {approved} the request.</div>
+        };
+    }
+
     return (
         <div>
             <HomeNavBar />
@@ -82,12 +106,10 @@ const Requests = () => {
 
             <h4>Incoming Requests for Your Books</h4>
             <div className='request-container'>{incomingRequestElems}</div>
+            {warning()}
         </div>
     )
-
 }
-
-
 
 
 
