@@ -71,6 +71,19 @@ const Requests = () => {
             .catch(err => console.log('App error accepting swap request: ', err));
     }
 
+    const handleWithdraw = (book, reqUsername, resUsername) => {
+        fetch('/library/action/withdrawRequest', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ book, reqUsername, resUsername })
+        })
+            .then(data => data.json())
+            .then(data => setUser(data))
+            .catch(err => console.log('App error withdrawing request: ', err))
+    }
+
     const outgoingRequestElems = user.outgoingRequests.map((request, i) => (
         <div key={i} style={{ width: '300px' }}>
             <RequestCard
@@ -78,6 +91,7 @@ const Requests = () => {
                 reqUsername={request.reqUsername}
                 resUsername={request.resUsername}
             />
+            <button className="transparent" onClick={() => handleWithdraw(request.book, request.reqUsername, request.resUsername)}>Withdraw</button>
         </div>
     ))
 
@@ -133,7 +147,7 @@ const Requests = () => {
             <div className='request-container'>
                 {outgoingRequestElems.length > 0 ?
                     // <Carousel responsive={responsive}>
-                        outgoingRequestElems
+                    outgoingRequestElems
                     // </Carousel>
                     : <div>No outgoing requests yet</div>}</div>
 
@@ -141,7 +155,7 @@ const Requests = () => {
             <div className='request-container'>
                 {incomingRequestElems.length > 0 ?
                     // <Carousel responsive={responsive}>
-                        incomingRequestElems
+                    incomingRequestElems
                     // </Carousel>
                     : <div>No incoming requests yet</div>
                 }</div>

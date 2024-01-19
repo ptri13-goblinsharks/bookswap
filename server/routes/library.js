@@ -57,6 +57,10 @@ router.post('/action/approveSwapRequest', sessionController.isLoggedIn, userCont
 router.post('/action/rejectSwapRequest', sessionController.isLoggedIn, userController.rejectSwapRequest, (req, res) => {
   res.status(200).json(res.locals.user);
 })
+
+router.post('/action/withdrawRequest', sessionController.isLoggedIn, userController.withdrawRequest, (req, res) => {
+  res.status(200).json(res.locals.user);
+})
 // router.get('/getLibrary/:username',
 //   libraryController.getUserLibrary,
 //   (req, res) => res.status(200).json(res.locals.userLibrary)
