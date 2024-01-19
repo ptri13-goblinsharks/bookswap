@@ -6,28 +6,24 @@ import AddBook from './AddBook';
 import MyBooks from './MyBooks';
 import { useSelector } from 'react-redux';
 
-const MyLibrary = () => {    
+const MyLibrary = () => {
+  // pull library data from DB here and pass to search bar as props.
 
-// pull library data from DB here and pass to search bar as props.
+  const [myLibraryBooks, setMyLibraryBooks] = useState([]);
 
-    const [myLibraryBooks, setMyLibraryBooks] = useState([]);
-
-  useEffect( () => {
+  useEffect(() => {
     fetch('/action/getLibrary')
-    .then(data => data.json())
-    .then (data => {
-
-      setMyLibraryBooks(data);
-
-    })
-  }, [])
-
+      .then((data) => data.json())
+      .then((data) => {
+        setMyLibraryBooks(data);
+      });
+  }, []);
 
   return (
     <div>
       <HomeNavBar />
-      <MyBooks books={myLibraryBooks} />
       <AddBook />
+      <MyBooks books={myLibraryBooks} />
     </div>
   );
 };
