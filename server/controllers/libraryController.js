@@ -96,16 +96,14 @@ libraryController.getAllBooks = (req, res, next) => {
 };
 
 libraryController.retrieveBook = async (req, res, next) => {
-  console.log('librabryController retrieve book running')
-  const { title } = req.body;
-  console.log('title is ', title)
+  const title = req.body.title;
   try {
     // find all books
 
     const results = await models.User.aggregate([
       { $unwind: "$books" },
-      { $match: { "books.book.title": title } },
-      { $project: { _id: 0, username: 1, address: 1, "books.book": 1 } },
+      { $match: {'books.book.title': { $regex: new RegExp(title, 'i') }} },
+      { $project: { _id: 0, username: 1, address: 1, books: 1 } },
     ]);
     // save books and users in object in {user: user, book: book} format in res.locals.books
     res.locals.foundBooks = results;
