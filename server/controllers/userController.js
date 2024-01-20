@@ -152,6 +152,9 @@ userController.addToUserLibrary = async (req, res, next) => {
 
 userController.sendSwapRequest = async (req, res, next) => {
   const { book, reqUsername, resUsername } = req.body;
+  console.log(req.body);
+  console.log(`book is ${book}, reqUsername is ${reqUsername}, resUsername is ${resUsername}`)
+
   const user = await User.find({ username: reqUsername });
   // const outgoingRequests = res.locals.user.outgoingRequests;
   let outgoingRequests = user.outgoingRequests;

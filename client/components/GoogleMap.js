@@ -8,7 +8,7 @@ import {
 } from '@vis.gl/react-google-maps';
 import Book from '../assets/images/Book.png';
 
-function GoogleMap({ selectedBook, bookAddress, handleRequestBook }) {
+function GoogleMap({bookAddress, handleRequestBook, reqUsername }) {
   const [position, setPosition] = useState({ lat: 34.0522, lng: -118.2437 });
   const [openInfoWindow, setOpenInfoWindow] = useState(false);
   const apiKey = 'AIzaSyDOh5A62p9bxdJ0MnHwHhzKO3McjKdAqCA';
@@ -57,7 +57,8 @@ function GoogleMap({ selectedBook, bookAddress, handleRequestBook }) {
                   <p>{bookAddress.address}</p>
                   <button
                     className='request-book-button'
-                    onClick={handleRequestBook}
+                    onClick={() => handleRequestBook(bookAddress.books.book, reqUsername, bookAddress.username)}
+                    // onClick={() => handleRequestBook(null, 'testusername1', 'testusername2')}
                   >
                     Request book
                   </button>

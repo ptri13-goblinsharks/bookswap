@@ -48,15 +48,15 @@ function HomeSearchBar() {
   };
 
   const handleRequestBook = (book, reqUsername, resUsername) => {
+    console.log(`book is ${book}, requsername is ${reqUsername}, resUsenrame is ${resUsername}`)
     fetch('/library/action/sendSwapRequest', {
       method: 'POST',
       headers: {
-        'Content-Type': 'aplication/json',
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ book, reqUsername, resUsername }),
+      body: JSON.stringify({ book: book, reqUsername: reqUsername, resUsername: resUsername })
     })
       .then((data) => data.json())
-      .then((data) => {})
       .catch((err) => console.log('error requesting book: ', err));
   };
 
@@ -98,13 +98,8 @@ function HomeSearchBar() {
         bookAddress={bookAddress[0]}
         selectedBook={selectedBook}
         className='google-map'
-        handleRequestBook={() =>
-          handleRequestBook(
-            selectedBook,
-            user.username,
-            bookAddress[0].username
-          )
-        }
+        handleRequestBook={handleRequestBook}
+        reqUsername={user.username}
       />
     </div>
   );
