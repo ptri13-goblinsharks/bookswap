@@ -152,14 +152,18 @@ userController.addToUserLibrary = async (req, res, next) => {
 
 userController.sendSwapRequest = async (req, res, next) => {
   const { book, reqUsername, resUsername } = req.body;
-  console.log(req.body);
   console.log(`book is ${book}, reqUsername is ${reqUsername}, resUsername is ${resUsername}`)
 
-  const user = await User.find({ username: reqUsername });
+  const user = await User.findOne({ username: reqUsername });
+  console.log(user.username)
   // const outgoingRequests = res.locals.user.outgoingRequests;
   let outgoingRequests = user.outgoingRequests;
+  console.log('outgoingRequests firstly is ', outgoingRequests)
   if (!outgoingRequests) outgoingRequests = [];
+  console.log('outgoing rqeuests then is ', outgoingRequests)
+
   outgoingRequests.push({ book, reqUsername, resUsername });
+  console.log('outgoing rqeuests finally is ', outgoingRequests)
   try {
     // update the current user's outgoing requests
     const updatedReqUser = await User.findOneAndUpdate(

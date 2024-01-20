@@ -38,7 +38,7 @@ function GoogleMap({bookAddress, handleRequestBook, reqUsername }) {
 
   return (
     <APIProvider apiKey={apiKey}>
-      <div style={{ height: '50vh', width: '50%' }}>
+      <div style={{ height: '70vh', width: '70%' }}>
         <Map zoom={9} center={position} mapId={'49e4b9ad955c530'}>
           {bookAddress && (
             <AdvancedMarker
@@ -57,7 +57,12 @@ function GoogleMap({bookAddress, handleRequestBook, reqUsername }) {
                   <p>{bookAddress.address}</p>
                   <button
                     className='request-book-button'
-                    onClick={() => handleRequestBook(bookAddress.books.book, reqUsername, bookAddress.username)}
+                    onClick={() => {
+                      handleRequestBook(bookAddress.books.book, reqUsername, bookAddress.username);
+                      window.confirm(
+                        'Your request has been submitted. Go to the Requests page to check the status.'
+                      );
+                    }}
                     // onClick={() => handleRequestBook(null, 'testusername1', 'testusername2')}
                   >
                     Request book
