@@ -5,15 +5,26 @@ function HomeSearchBar() {
   const [books, setBooks] = useState([]);
   const [searchBook, setSearchBook] = useState('');
   const [selectedBook, setSelectedBook] = useState(null);
+  const [bookAddress, setBookAddress] = useState('');
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     fetch('/library/action/globalLibrary')
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setBooks(data);
       });
+
+    fetch('/action/getUser')
+      .then((res) => res.json())
+      .then((data) => setUser(data))
+      .catch((err) => console.log('App error getting user:', err));
   }, []);
+
+  // useEffect(() => {
+  //   console.log('SEARCHBOOK->', searchBook);
+  // }, []);
 
   const filteredBooks = books.filter((book) => {
     return book.title.toLowerCase().includes(searchBook.toLowerCase());
@@ -22,6 +33,31 @@ function HomeSearchBar() {
   const handleBookSelect = (book) => {
     setSelectedBook(book);
     setSearchBook('');
+    fetch('library/action/retrieveBook', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ title: book.title }),
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        console.log('address data ->', data);
+        setBookAddress(data);
+      });
+  };
+
+  const handleRequestBook = (book, reqUsername, resUsername) => {
+    fetch('/library/action/sendSwapRequest', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'aplication/json',
+      },
+      body: JSON.stringify({ book, reqUsername, resUsername }),
+    })
+      .then((data) => data.json())
+      .then((data) => {})
+      .catch((err) => console.log('error requesting book: ', err));
   };
 
   return (
@@ -54,13 +90,22 @@ function HomeSearchBar() {
               <img src={selectedBook.previewUrl} style={{ height: '300px' }} />
               <li>{selectedBook.title}</li>
               <li>{selectedBook.author}</li>
-              {/* <li>{selectedBook.genre}</li> */}
-              <li>{selectedBook.fullAddress}</li>
             </ul>
           )}
         </div>
       </div>
-      <GoogleMap selectedBook={selectedBook} className='google-map' />
+      <GoogleMap
+        bookAddress={bookAddress[0]}
+        selectedBook={selectedBook}
+        className='google-map'
+        handleRequestBook={() =>
+          handleRequestBook(
+            selectedBook,
+            user.username,
+            bookAddress[0].username
+          )
+        }
+      />
     </div>
   );
 }
@@ -70,3 +115,14 @@ function HomeSearchBar() {
 // The book should be an object i.e. include title, author, previewUrl
 
 export default HomeSearchBar;
+
+// fetch('library/action/retrieveBook', {
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json',
+//   },
+//   body: JSON.stringify({ title: book }),
+// })
+//   .then((data) => data.json())
+//   .then((data) => {
+//     console.log(data);
