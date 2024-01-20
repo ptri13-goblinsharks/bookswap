@@ -36,7 +36,7 @@ const MyLibrary = () => {
     <div>
       <HomeNavBar />
       {/* <MyBooks books={myLibraryBooks} /> */}
-      <h1>You currently have {myLibraryBooks.length} books.</h1>
+      <h1>You currently have {myLibraryBooks.length > 1 ? `${myLibraryBooks.length} books` : `${myLibraryBooks.length} book`}.</h1>
       {myLibraryBooks.length > 0 ? <MyBooks books={myLibraryBooks} deleteBook={deleteBook} /> : <div>No books yet.</div>}
       
       <h1>Add more books</h1>
