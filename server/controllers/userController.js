@@ -121,7 +121,7 @@ userController.addToUserLibrary = async (req, res, next) => {
     try {
         if (!user.books.findIndex(el => el.book.title === book.title
             )) {
-                console.log('Book Exists in User Library')
+                console.log('Book Exists in User Library!')
                 res.locals.user = user
                 return next();
             } else {
