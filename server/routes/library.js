@@ -27,7 +27,7 @@ router.get(
   libraryController.getAllBooks,
 
   (req, res) => {
-    console.log(res.locals.globalLibrary);
+    // console.log(res.locals.globalLibrary);
     res.status(200).json(res.locals.globalLibrary);
   }
 );
@@ -40,27 +40,61 @@ router.post(
   }
 );
 
-router.delete('/action/deleteBook', sessionController.isLoggedIn, libraryController.retrieveBook, libraryController.deleteBook, (req, res) => {
-  res.status(200).json(res.locals.user);
-})
+router.delete(
+  '/action/deleteBook',
+  sessionController.isLoggedIn,
+  libraryController.retrieveBook,
+  libraryController.deleteBook,
+  (req, res) => {
+    res.status(200).json(res.locals.user);
+  }
+);
 
-router.post('/action/sendSwapRequest', 
-// sessionController.isLoggedIn, 
-userController.sendSwapRequest, (req, res) => {
-  res.status(200).json(res.locals.user);
-});
+router.delete(
+  '/action/deleteBook',
+  sessionController.isLoggedIn,
+  libraryController.retrieveBook,
+  libraryController.deleteBook,
+  (req, res) => {
+    res.status(200).json(res.locals.user);
+  }
+);
 
-router.post('/action/approveSwapRequest', sessionController.isLoggedIn, userController.approveSwapRequest, (req, res) => {
-  res.status(200).json(res.locals.user);
-});
+router.post(
+  '/action/sendSwapRequest',
+  // sessionController.isLoggedIn,
+  userController.sendSwapRequest,
+  (req, res) => {
+    res.status(200).json(res.locals.user);
+  }
+);
 
-router.post('/action/rejectSwapRequest', sessionController.isLoggedIn, userController.rejectSwapRequest, (req, res) => {
-  res.status(200).json(res.locals.user);
-})
+router.post(
+  '/action/approveSwapRequest',
+  sessionController.isLoggedIn,
+  userController.approveSwapRequest,
+  (req, res) => {
+    res.status(200).json(res.locals.user);
+  }
+);
 
-router.post('/action/withdrawRequest', sessionController.isLoggedIn, userController.withdrawRequest, (req, res) => {
-  res.status(200).json(res.locals.user);
-})
+router.post(
+  '/action/rejectSwapRequest',
+  sessionController.isLoggedIn,
+  userController.rejectSwapRequest,
+  (req, res) => {
+    res.status(200).json(res.locals.user);
+  }
+);
+
+router.post(
+  '/action/withdrawRequest',
+  sessionController.isLoggedIn,
+  userController.withdrawRequest,
+  (req, res) => {
+    res.status(200).json(res.locals.user);
+  }
+);
 // router.get('/getLibrary/:username',
 //   libraryController.getUserLibrary,
 //   (req, res) => res.status(200).json(res.locals.userLibrary)

@@ -6,19 +6,25 @@ function HomeNavBar() {
   const [unread, setUnread] = useState('');
   useEffect(() => {
     fetch('/action/getNotifications')
-    .then(data => data.json())
-    .then(data => {
-      const newUnread = data.filter(item => item.read === false);
-      console.log(newUnread);
-      setUnread(newUnread.length);
-    })
-    .catch(err => console.log('App error getting number of unread notifications: ', err))
-  })
+      .then((data) => data.json())
+      .then((data) => {
+        const newUnread = data.filter((item) => item.read === false);
+        // console.log(newUnread);
+        setUnread(newUnread.length);
+      })
+      .catch((err) =>
+        console.log('App error getting number of unread notifications: ', err)
+      );
+  });
 
   return (
     <nav className='home-navbar'>
       <Link to='/home'>
-        <img src={BookSwapLogo} style={{width: '70px'}} className='bookswap-logo' />
+        <img
+          src={BookSwapLogo}
+          style={{ width: '70px' }}
+          className='bookswap-logo'
+        />
       </Link>
       <Link to='/myLibrary'>
         <h2>My Library</h2>

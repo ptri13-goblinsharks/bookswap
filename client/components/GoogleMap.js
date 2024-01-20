@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import {
   APIProvider,
@@ -9,14 +8,15 @@ import {
 } from '@vis.gl/react-google-maps';
 import Book from '../assets/images/Book.png';
 
-function GoogleMap({ selectedBook }) {
+function GoogleMap({ selectedBook, bookAddress, handleRequestBook }) {
   const [position, setPosition] = useState({ lat: 34.0522, lng: -118.2437 });
   const [openInfoWindow, setOpenInfoWindow] = useState(false);
   const apiKey = 'AIzaSyDOh5A62p9bxdJ0MnHwHhzKO3McjKdAqCA';
 
   useEffect(() => {
-    if (selectedBook && selectedBook.fullAddress) {
-      const address = selectedBook.fullAddress;
+    if (bookAddress && bookAddress.address) {
+      const address = bookAddress.address;
+      console.log(address);
       // make API call to conver string adress to coordinates.
       const geocodingApiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
         address
@@ -34,13 +34,13 @@ function GoogleMap({ selectedBook }) {
           console.error('Error fetching geocoding data', error)
         );
     }
-  }, [selectedBook, apiKey]);
+  }, [bookAddress, apiKey]);
 
   return (
     <APIProvider apiKey={apiKey}>
       <div style={{ height: '50vh', width: '50%' }}>
         <Map zoom={9} center={position} mapId={'49e4b9ad955c530'}>
-          {selectedBook && (
+          {bookAddress && (
             <AdvancedMarker
               position={position}
               onClick={() => setOpenInfoWindow(true)}
@@ -51,9 +51,32 @@ function GoogleMap({ selectedBook }) {
               position={position}
               onCloseClick={() => setOpenInfoWindow(false)}
             >
-              <p>{selectedBook.title}</p>
-              <p>{selectedBook.fullAddress}</p>
-              <button>Request book</button>
+              {
+                <React.Fragment key={bookAddress._id}>
+                  <p>{bookAddress.books.book.title}</p>
+                  <p>{bookAddress.address}</p>
+                  <button
+                    className='request-book-button'
+                    onClick={handleRequestBook}
+                  >
+                    Request book
+                  </button>
+                </React.Fragment>
+              }
+              {/* {bookAddress.map((bookEntry) => {
+                if (bookEntry.books.book.title === selectedBook.title) {
+                  return (
+                    <React.Fragment key={bookEntry._id}>
+                      <p>{bookEntry.books.book.title}</p>
+                      <p>{bookEntry.address}</p>
+                      <button className='request-book-button'>
+                        Request book
+                      </button>
+                    </React.Fragment>
+                  );
+                }
+                return null; // If the titles don't match, return null
+              })} */}
             </InfoWindow>
           )}
         </Map>
