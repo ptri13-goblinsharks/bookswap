@@ -62,6 +62,8 @@ function HomeSearchBar() {
 
   return (
     <div className='home-container'>
+      <div>
+      <h1>Search for a book</h1>
       <div className='search-container'>
         <input
           className='home-searchbar'
@@ -93,6 +95,7 @@ function HomeSearchBar() {
             </ul>
           )}
         </div>
+      </div>
       </div>
       <GoogleMap
         bookAddress={bookAddress[0]}
