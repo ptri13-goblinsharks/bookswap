@@ -1,0 +1,193 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+.home-navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-bottom: 1px solid lightgrey;
+}
+
+.home-navbar button {
+  background-color: #88a1b7;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100px;
+  height: 50px;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.home-navbar a {
+  color: rgb(66, 65, 65);
+}
+
+.home-navbar a:hover {
+  color: rgb(116, 115, 115);
+}
+
+.home-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px;
+  margin-top: 50px;
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.home-searchbar {
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  padding: 10px;
+}
+
+.bookswap-logo {
+  width: 120px;
+}
+
+body {
+  font-family: Arial;
+  color: rgb(66, 65, 65);
+}
+
+input {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5pt;
+  border: 1pt solid lightgray;
+  border-radius: 5px;
+  width: 350px;
+  height: 25px;
+}
+
+.modal-close-button {
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+button {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 5pt;
+  border: none;
+  border-radius: 5px;
+  width: 365px;
+  height: 40px;
+  background-color: rgb(92, 43, 226);
+  color: white;
+  font-weight: bold;
+  font-size: 12pt;
+}
+
+button:hover {
+  background-color: rgb(123, 87, 223);
+}
+
+button:disabled {
+  background-color: rgb(183, 170, 216);
+}
+
+button.small {
+  width: 100px;
+  margin-right: 20px;
+}
+
+button.transparent {
+  background-color: white;
+  color: rgb(183, 170, 216);
+  border: 1px solid rgb(183, 170, 216);
+  width: 100px;
+}
+
+button.transparent:hover {
+  color: rgb(123, 87, 223);
+  border: 1px solid rgb(123, 87, 223);
+}
+.request-book-button {
+  width: 150px;
+}
+
+a {
+  font-weight: bold;
+  text-decoration: none;
+  color: rgb(92, 43, 226);
+}
+
+a:hover {
+  color: rgb(123, 87, 223);
+}
+
+.form-container {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+}
+
+.warning {
+  margin-bottom: 20px;
+}
+
+h3 {
+  margin: 40px;
+  font-size: 18pt;
+}
+
+h2 {
+  font-size: 12pt;
+}
+
+h1 {
+  font-size: 18pt;
+}
+
+.notifications-container {
+  padding: 20px;
+}
+
+.notification:hover {
+  cursor: pointer;
+}
+
+.request-container {
+  display: flex;
+  gap: 20px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 685px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+ul {
+  list-style: none;
+}
