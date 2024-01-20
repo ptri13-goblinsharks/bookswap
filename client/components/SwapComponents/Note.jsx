@@ -20,7 +20,7 @@ const Note = (props) => {
     };
 
     return (
-        <div onClick={props.readNote} style={textStyle}>
+        <div onClick={props.readNote} style={textStyle} className="notification">
             <div>
                 At: {new Date(props.createdAt).toLocaleString('en-US', dateTimeOptions)} ET.
             </div>

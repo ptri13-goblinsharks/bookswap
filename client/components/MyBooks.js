@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
-const MyBooks = ({ books }) => {
+const MyBooks = ({ books, deleteBook }) => {
   // const [myBooks, setMyBooks] = useState([]);
 
   const responsive = {
@@ -39,9 +39,22 @@ const MyBooks = ({ books }) => {
             book && (
               <div key={index}>
                 <img src={book.previewUrl} style={{ height: '300px' }}></img>
-                <li>{book.title}</li>
+                <li>
+                  <b>{book.title}</b>
+                </li>
                 <li>{book.author}</li>
-
+                <button
+                  className='transparent'
+                  onClick={() => {
+                    const confirmDelete = window.confirm(
+                      'Are you sure you want to delete this book?'
+                    );
+                    if (confirmDelete) deleteBook({ title: book.title });
+                  }}
+                >
+                  Delete
+                </button>
+                {/* <li>{book.genre}</li> */}
                 {/* Add other book details as needed */}
               </div>
             )

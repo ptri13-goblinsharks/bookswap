@@ -46,7 +46,7 @@ libraryController.addToGlobalLibrary = async (req, res, next) => {
       console.log('book already exists');
       res.locals.book = checkBook;
     } else {
-      const book = await models.Book.create({title, author, olId, previewUrl});
+      const book = await models.Book.create({ title, author, olId, previewUrl });
       res.locals.book = book;
     }
     return next();
@@ -55,7 +55,26 @@ libraryController.addToGlobalLibrary = async (req, res, next) => {
   }
 };
 
-libraryController.deleteBook = (req, res, next) => { };
+libraryController.deleteBook = async (req, res, next) => {
+  const { title } = req.body;
+  try {
+    const newUserLibrary = res.locals.user.books.filter(item => item.book.title !== title);
+    const updatedUser = await models.User.findOneAndUpdate(
+      { username: res.locals.user.username },
+      { books: newUserLibrary },
+      { new: true }
+    );
+    res.locals.user = updatedUser;
+    // if that was the last copy in global library, delete from global library
+    if (res.locals.foundBooks.length <= 1) {
+      const deletedBook = await models.Book.findOneAndDelete({ "book.title": title })
+    }
+    return next()    
+  } catch (error) {
+    console.log('error in libraryController.deleteBook: ', error)
+    return next(error)
+  }
+};
 
 libraryController.updateBook = (req, res, next) => { };
 
@@ -80,7 +99,7 @@ libraryController.retrieveBook = async (req, res, next) => {
   const title = req.body.title;
   try {
     // find all books
-    
+
     const results = await models.User.aggregate([
       { $unwind: "$books" },
       { $match: {'books.book.title': { $regex: new RegExp(title, 'i') }} },

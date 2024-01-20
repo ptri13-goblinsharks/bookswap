@@ -19,12 +19,25 @@ const MyLibrary = () => {
       });
   }, []);
 
+  const deleteBook = ({title}) => {
+    fetch('/library/action/deleteBook', {
+      method: 'DELETE',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({title})
+    })
+    .then(data => data.json())
+    .then(data => setMyLibraryBooks(data.books))
+    .catch(err => console.log('App error deleting book: ', err));
+  }
+
   return (
     <div>
       <HomeNavBar />
       {/* <MyBooks books={myLibraryBooks} /> */}
-      <h1>You currently have {myLibraryBooks.length} books.</h1>
-      {myLibraryBooks.length > 0 ? <MyBooks books={myLibraryBooks} /> : <div>No books yet.</div>}
+      <h1>You currently have {myLibraryBooks.length > 1 ? `${myLibraryBooks.length} books` : `${myLibraryBooks.length} book`}.</h1>
+      {myLibraryBooks.length > 0 ? <MyBooks books={myLibraryBooks} deleteBook={deleteBook} /> : <div>No books yet.</div>}
       
       <h1>Add more books</h1>
       <AddBook updateBooks={(data) => setMyLibraryBooks(data)}/>

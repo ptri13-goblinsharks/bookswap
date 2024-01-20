@@ -120,24 +120,30 @@ userController.addToUserLibrary = async (req, res, next) => {
   const book = res.locals.book;
   // const bookId = res.locals.book._id;
   // const currentBooks = res.locals.user.books;
-  const currentBooks = user.books;
+  const currentBooks = [...user.books];
   // currentBooks.push([{ book: bookId }, { isAvailable: true }]);
   currentBooks.push({ book });
   try {
-    const updatedUser = await User.findOneAndUpdate(
-      // { _id: userId },
-      { username: res.locals.user.username },
-      // { username },
-      { $set: { books: currentBooks } },
-      { new: true }
-    );
-    // const newBookLocation = updatedUser.books.length - 1;
-    // const populatedUser = await updatedUser.populate({
-    //     path: `books[${newBookLocation}]`
-    // })
-    // res.locals.user = populatedUser;
-    res.locals.user = updatedUser;
-    console.log('updatedUser is ', updatedUser);
+    if (!user.books.findIndex((el) => el.book.title === book.title)) {
+      console.log('Book Exists in User Library!');
+      res.locals.user = user;
+      return next();
+    } else {
+      const updatedUser = await User.findOneAndUpdate(
+        // { _id: userId },
+        { username: res.locals.user.username },
+        // { username },
+        { $set: { books: currentBooks } },
+        { new: true }
+      );
+      // const newBookLocation = updatedUser.books.length - 1;
+      // const populatedUser = await updatedUser.populate({
+      //     path: `books[${newBookLocation}]`
+      // })
+      // res.locals.user = populatedUser;
+      res.locals.user = updatedUser;
+      console.log('updatedUser is ', updatedUser);
+    }
     return next();
   } catch (err) {
     console.log('Error in userController.addToUserLibrary: ', err);
@@ -247,7 +253,8 @@ userController.rejectSwapRequest = async (req, res, next) => {
     // remove incoming request from resUser
     const incomingRequests = res.locals.user.incomingRequests;
     const updatedIncomingRequests = incomingRequests.filter(
-      (request) => request.book.title !== book.title
+      (request) =>
+        request.book.title !== book.title || request.reqUsername !== reqUsername
     );
     const resUser = await User.findOneAndUpdate(
       { username: res.locals.user.username },
@@ -283,6 +290,38 @@ userController.rejectSwapRequest = async (req, res, next) => {
   }
 };
 
+userController.withdrawRequest = async (req, res, next) => {
+  console.log('withdraw request running');
+  const { book, reqUsername, resUsername } = req.body;
+  try {
+    const outgoingRequests = res.locals.user.outgoingRequests.filter(
+      (item) =>
+        item.book.title !== book.title || item.resUsername !== resUsername
+    );
+    const newReqUser = await User.findOneAndUpdate(
+      { username: reqUsername },
+      { outgoingRequests },
+      { new: true }
+    );
+    res.locals.user = newReqUser;
+
+    const resUser = await User.findOne({ username: resUsername });
+    const incomingRequests = resUser.incomingRequests.filter(
+      (item) =>
+        item.book.title !== book.title || item.reqUsername !== reqUsername
+    );
+    const newResUser = await User.findOneAndUpdate(
+      { username: resUsername },
+      { incomingRequests },
+      { new: true }
+    );
+    return next();
+  } catch (err) {
+    console.log('error in userController withdraw request: ', err);
+    return next(err);
+  }
+};
+
 userController.markReadNotification = async (req, res, next) => {
   console.log('userController markReadnotification running');
   const { id } = req.params;
@@ -300,6 +339,24 @@ userController.markReadNotification = async (req, res, next) => {
     const updatedUser = await User.findOneAndUpdate(
       { username: res.locals.user.username },
       { notifications },
+      { new: true }
+    );
+    res.locals.user = updatedUser;
+    return next();
+  } catch (error) {
+    console.log('Error in userController.markReadNotification: ', error);
+    return next(error);
+  }
+};
+
+userController.clearNotifications = async (req, res, next) => {
+  res.locals.user.notifications.forEach(async (notice) => {
+    await Notification.findOneAndDelete({ id: notice._id });
+  });
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      { username: res.locals.user.username },
+      { notifications: [] },
       { new: true }
     );
     res.locals.user = updatedUser;
